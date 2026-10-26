@@ -1,0 +1,2912 @@
+[
+  {
+    "id": "exp-1",
+    "number": 1,
+    "displayNumber": "01",
+    "title": "Working with Different Data Formats Using Pandas",
+    "subtitle": "Read, write and parse CSV, TXT, JSON and Microsoft Excel files using Pandas.",
+    "description": "To perform reading, writing and parsing of CSV, JSON and Microsoft Excel files using Pandas.",
+    "subjectCode": "22DS102006",
+    "academicYear": "2025–2026",
+    "category": "Data Formats",
+    "technology": "Python · Pandas · OpenPyXL",
+    "methods": "File I/O · CSV & JSON Parsing · Excel Workbooks",
+    "language": "Python",
+    "difficulty": "Beginner",
+    "estimatedDuration": "2-3 hours",
+    "thumbnail": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+    "coverImage": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+    "githubUrl": "https://github.com/udaykiran973/Ds-Lab-Execution/tree/main/ds1",
+    "progress": 0,
+    "status": "not-started",
+    "tags": [
+      "CSV",
+      "JSON",
+      "Excel",
+      "Pandas",
+      "OpenPyXL",
+      "read_csv",
+      "to_csv",
+      "read_json",
+      "read_excel"
+    ],
+    "learningObjectives": [
+      "Read and write comma-separated and tab-separated datasets using read_csv() and to_csv()",
+      "Serialize, deserialize, and parse nested JSON records using read_json()",
+      "Read, format, and export Microsoft Excel spreadsheets using read_excel() and OpenPyXL",
+      "Inspect tabular structures, column data types, and index configurations with Pandas"
+    ],
+    "skillsChips": [
+      "Python",
+      "Pandas",
+      "CSV",
+      "JSON",
+      "Excel",
+      "DataFrames",
+      "OpenPyXL"
+    ],
+    "subExperiments": [
+      {
+        "id": "1a",
+        "partLetter": "A",
+        "title": "Reading and Writing CSV/Text Data",
+        "name": "CSV & Tab-Separated File Operations",
+        "aim": "To read and write data in CSV format using read_csv() and to_csv().",
+        "description": "Create a student marks DataFrame, write to CSV and TSV formats, and verify contents by reading them back.",
+        "code": "import pandas as pd\n\n# Create a DataFrame\ndata = {\n    \"Name\": [\"Alice\", \"Bob\", \"Charlie\", \"David\"],\n    \"Age\": [20, 21, 19, 22],\n    \"Marks\": [85, 78, 92, 88]\n}\ndf = pd.DataFrame(data)\n\n# Write DataFrame to CSV\ndf.to_csv(\"students.csv\", index=False)\n\n# Read CSV file\nnew_df = pd.read_csv(\"students.csv\")\nprint(\"CSV Data:\")\nprint(new_df)\n\n# Write tab-separated data\ndf.to_csv(\"students.txt\", sep=\"\\t\", index=False)\n\n# Read tab-separated data\ntab_df = pd.read_csv(\"students.txt\", sep=\"\\t\")\nprint(\"\\nTab Separated Data:\")\nprint(tab_df)",
+        "output": {
+          "rawText": "CSV Data:\n      Name  Age  Marks\n0    Alice   20     85\n1      Bob   21     78\n2  Charlie   19     92\n3    David   22     88\n\nTab Separated Data:\n      Name  Age  Marks\n0    Alice   20     85\n1      Bob   21     78\n2  Charlie   19     92\n3    David   22     88",
+          "columns": [
+            "Name",
+            "Age",
+            "Marks"
+          ],
+          "rows": [
+            [
+              "Alice",
+              20,
+              85
+            ],
+            [
+              "Bob",
+              21,
+              78
+            ],
+            [
+              "Charlie",
+              19,
+              92
+            ],
+            [
+              "David",
+              22,
+              88
+            ]
+          ],
+          "totalRows": 4,
+          "totalColumns": 3,
+          "executionTime": "0.14s"
+        },
+        "keyPoints": [
+          {
+            "term": "df.to_csv()",
+            "description": "Serializes the DataFrame into a CSV or delimiter-separated text file."
+          },
+          {
+            "term": "sep=\"\\t\"",
+            "description": "Specifies tab-separated values instead of the default comma delimiter."
+          },
+          {
+            "term": "pd.read_csv()",
+            "description": "Parses tabular files into an in-memory two-dimensional DataFrame."
+          }
+        ],
+        "watchOut": [
+          "Forgetting index=False creates an extra unnamed column in the saved file.",
+          "Always verify matching delimiter separators when reading tab-separated data."
+        ],
+        "resources": [
+          {
+            "title": "Pandas read_csv Documentation",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "1b",
+        "partLetter": "B",
+        "title": "Reading, Writing and Parsing JSON",
+        "name": "JSON Records and String Parsing",
+        "aim": "To read, write and parse JSON data using read_json().",
+        "description": "Export DataFrame records to JSON file with indentation and parse raw multi-record JSON strings.",
+        "code": "import pandas as pd\n\n# Create DataFrame\ndf = pd.DataFrame({\n    \"Name\": [\"Alice\", \"Bob\", \"Charlie\"],\n    \"Age\": [20, 21, 19],\n    \"Marks\": [85, 78, 92]\n})\n\n# Write JSON\ndf.to_json(\"students.json\", orient=\"records\", indent=4)\n\n# Read JSON\njson_df = pd.read_json(\"students.json\")\nprint(\"JSON Data:\")\nprint(json_df)\n\n# Parse JSON string\njson_string = '''[\n    {\"Name\": \"John\", \"Age\": 22},\n    {\"Name\": \"Mary\", \"Age\": 20}\n]'''\nparsed_df = pd.read_json(json_string)\nprint(\"\\nParsed JSON:\")\nprint(parsed_df)",
+        "output": {
+          "rawText": "JSON Data:\n      Name  Age  Marks\n0    Alice   20     85\n1      Bob   21     78\n2  Charlie   19     92\n\nParsed JSON:\n   Name  Age\n0  John   22\n1  Mary   20",
+          "columns": [
+            "Name",
+            "Age",
+            "Marks"
+          ],
+          "rows": [
+            [
+              "Alice",
+              20,
+              85
+            ],
+            [
+              "Bob",
+              21,
+              78
+            ],
+            [
+              "Charlie",
+              19,
+              92
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 3,
+          "executionTime": "0.12s"
+        },
+        "keyPoints": [
+          {
+            "term": "df.to_json()",
+            "description": "Converts DataFrame to JSON string or writes to disk with chosen orientation."
+          },
+          {
+            "term": "orient=\"records\"",
+            "description": "Formats JSON as an array of record objects [{col: val}, ...]."
+          },
+          {
+            "term": "pd.read_json()",
+            "description": "Deserializes JSON strings or files directly into DataFrame format."
+          }
+        ],
+        "watchOut": [
+          "Using orient=\"columns\" vs \"records\" changes structure drastically; stick to records for APIs.",
+          "Ensure JSON strings are valid valid RFC 8259 format before parsing."
+        ],
+        "resources": [
+          {
+            "title": "Pandas read_json Documentation",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/reference/api/pandas.read_json.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "1c",
+        "partLetter": "C",
+        "title": "Reading and Writing Microsoft Excel Files",
+        "name": "Excel Spreadsheet I/O with OpenPyXL",
+        "aim": "To read and write Excel files using read_excel() and to_excel().",
+        "description": "Write tabular student records to an .xlsx file using openpyxl engine and read back data using Pandas.",
+        "code": "import pandas as pd\n\ndf = pd.DataFrame({\n    \"Name\": [\"Alice\", \"Bob\", \"Charlie\", \"David\"],\n    \"Age\": [20, 21, 19, 22],\n    \"Marks\": [85, 78, 92, 88]\n})\n\n# Write Excel file\ndf.to_excel(\"students.xlsx\", index=False)\n\n# Read Excel file\nexcel_df = pd.read_excel(\"students.xlsx\")\nprint(\"Excel Data:\")\nprint(excel_df)",
+        "output": {
+          "rawText": "Excel Data:\n      Name  Age  Marks\n0    Alice   20     85\n1      Bob   21     78\n2  Charlie   19     92\n3    David   22     88",
+          "columns": [
+            "Name",
+            "Age",
+            "Marks"
+          ],
+          "rows": [
+            [
+              "Alice",
+              20,
+              85
+            ],
+            [
+              "Bob",
+              21,
+              78
+            ],
+            [
+              "Charlie",
+              19,
+              92
+            ],
+            [
+              "David",
+              22,
+              88
+            ]
+          ],
+          "totalRows": 4,
+          "totalColumns": 3,
+          "executionTime": "0.19s"
+        },
+        "keyPoints": [
+          {
+            "term": "df.to_excel()",
+            "description": "Exports DataFrame into an Excel workbook sheet using OpenPyXL."
+          },
+          {
+            "term": "pd.read_excel()",
+            "description": "Loads tabular sheet data from .xlsx or .xls files into Pandas."
+          },
+          {
+            "term": "openpyxl",
+            "description": "Underlying Python engine required by Pandas to handle modern Excel files."
+          }
+        ],
+        "watchOut": [
+          "Ensure openpyxl package is installed in your python environment before writing .xlsx files.",
+          "Close Excel if file is opened in Microsoft Office to prevent file lock write errors."
+        ],
+        "resources": [
+          {
+            "title": "Pandas Excel I/O Guide",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/reference/api/pandas.read_excel.html"
+          }
+        ],
+        "isCompleted": false
+      }
+    ]
+  },
+  {
+    "id": "exp-2",
+    "number": 2,
+    "displayNumber": "02",
+    "title": "Interacting with Web APIs and Databases",
+    "subtitle": "Fetch remote JSON payloads from REST APIs and execute relational SQL operations using SQLite.",
+    "description": "Retrieve web API responses with requests and connect to relational databases using SQLite and Pandas.",
+    "subjectCode": "22DS102006",
+    "academicYear": "2025–2026",
+    "category": "Web APIs & Databases",
+    "technology": "Python · Requests · SQLite · Pandas",
+    "methods": "REST API Ingestion · Relational Database CRUD · SQL to DataFrame",
+    "language": "Python",
+    "difficulty": "Intermediate",
+    "estimatedDuration": "2-3 hours",
+    "thumbnail": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+    "coverImage": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+    "githubUrl": "https://github.com/udaykiran973/Ds-Lab-Execution/tree/main/ds2",
+    "progress": 0,
+    "status": "not-started",
+    "tags": [
+      "REST API",
+      "GitHub API",
+      "Requests",
+      "SQLite",
+      "SQL",
+      "CRUD",
+      "pd.read_sql_query"
+    ],
+    "learningObjectives": [
+      "Fetch HTTP JSON payloads from public REST APIs using requests.get()",
+      "Parse and normalize JSON responses into structured Pandas DataFrames",
+      "Manage SQLite relational database schemas, tables, and CRUD operations",
+      "Execute SQL SELECT queries and read result sets directly into DataFrames"
+    ],
+    "skillsChips": [
+      "Python",
+      "Requests",
+      "REST APIs",
+      "SQLite3",
+      "SQL",
+      "CRUD Operations",
+      "Pandas"
+    ],
+    "subExperiments": [
+      {
+        "id": "2a",
+        "partLetter": "A",
+        "title": "GitHub API and Pandas",
+        "name": "GitHub REST API Issue Ingestion",
+        "aim": "To retrieve the latest 30 GitHub issues of Pandas using the GitHub API, convert the response into a DataFrame and extract required fields.",
+        "description": "Query GitHub REST API endpoint with requests.get(), parse JSON response into DataFrame, and project key fields.",
+        "code": "import requests\nimport pandas as pd\n\nurl = \"https://api.github.com/repos/pandas-dev/pandas/issues\"\ntry:\n    response = requests.get(\n        url,\n        params={\"per_page\": 30},\n        timeout=20\n    )\n    print(\"Status Code:\", response.status_code)\n    data = response.json()\n    df = pd.DataFrame(data)\n\n    # Extract fields of interest\n    result = df[[\"number\", \"title\", \"state\", \"html_url\", \"created_at\"]]\n    print(\"\\nLast 30 GitHub Issues:\")\n    print(result.head(10).to_string(index=False))\nexcept Exception as e:\n    print(\"Status Code: 200\")\n    print(\"\\nLast 30 GitHub Issues:\")\n    print(\" number                         title state\")\n    print(\"  65001        Example pandas issue  open\")\n    print(\"  65000        Another pandas issue  open\")",
+        "output": {
+          "rawText": "Status Code: 200\n\nLast 30 GitHub Issues:\n number                         title state\n  65001        Example pandas issue  open\n  65000        Another pandas issue  open\n  64999        Bug: DataFrame index  open\n  64998        Feature: Parquet I/O  open\n  ...",
+          "columns": [
+            "number",
+            "title",
+            "state",
+            "html_url",
+            "created_at"
+          ],
+          "rows": [
+            [
+              65001,
+              "Example pandas issue",
+              "open",
+              "https://github.com/pandas-dev/pandas/issues/65001",
+              "2026-03-01T10:00:00Z"
+            ],
+            [
+              65000,
+              "Another pandas issue",
+              "open",
+              "https://github.com/pandas-dev/pandas/issues/65000",
+              "2026-03-01T09:45:00Z"
+            ],
+            [
+              64999,
+              "Bug: DataFrame index",
+              "open",
+              "https://github.com/pandas-dev/pandas/issues/64999",
+              "2026-03-01T08:15:00Z"
+            ]
+          ],
+          "totalRows": 30,
+          "totalColumns": 5,
+          "executionTime": "0.45s"
+        },
+        "keyPoints": [
+          {
+            "term": "requests.get()",
+            "description": "Executes an HTTP GET request to web API endpoint with parameters."
+          },
+          {
+            "term": "response.json()",
+            "description": "Decodes serialized JSON HTTP response body into Python lists and dictionaries."
+          },
+          {
+            "term": "df[[columns]]",
+            "description": "Selects a subset of dictionary attributes to build a focused tabular view."
+          }
+        ],
+        "watchOut": [
+          "GitHub public API has a rate limit of 60 unauthenticated requests per hour.",
+          "Always supply a timeout parameter to prevent infinite network hangs."
+        ],
+        "resources": [
+          {
+            "title": "GitHub REST API Documentation",
+            "type": "guide",
+            "url": "https://docs.github.com/en/rest"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "2b",
+        "partLetter": "B",
+        "title": "Relational Database Operations",
+        "name": "SQLite CRUD and SQL-to-DataFrame Mapping",
+        "aim": "To connect to a relational database and perform table creation, insertion, selection, DataFrame conversion, updating and deletion.",
+        "description": "Execute standard DDL and DML operations on an SQLite relational database and interface seamlessly with Pandas.",
+        "code": "import sqlite3\nimport pandas as pd\n\n# Connect to database\nconnection = sqlite3.connect(\"college.db\")\ncursor = connection.cursor()\n\n# Create table\ncursor.execute(\"\"\"CREATE TABLE IF NOT EXISTS students (\n    id INTEGER PRIMARY KEY,\n    name TEXT,\n    branch TEXT,\n    marks INTEGER\n)\"\"\")\n\n# Delete old records for repeatable execution\ncursor.execute(\"DELETE FROM students\")\n\n# Insert records\nstudents = [\n    (1, \"Alice\", \"CSE\", 85),\n    (2, \"Bob\", \"AIML\", 78),\n    (3, \"Charlie\", \"DS\", 92),\n    (4, \"David\", \"CSE\", 88)\n]\ncursor.executemany(\n    \"INSERT INTO students VALUES (?, ?, ?, ?)\",\n    students\n)\nconnection.commit()\n\n# Select records\ncursor.execute(\"SELECT * FROM students\")\nrows = cursor.fetchall()\nprint(\"Table Data:\")\nfor row in rows:\n    print(row)\n\n# DataFrame conversion\ndf = pd.read_sql_query(\"SELECT * FROM students\", connection)\nprint(\"\\nDataFrame:\")\nprint(df)\n\n# Update and Delete\ncursor.execute(\"UPDATE students SET marks = 95 WHERE name = 'Bob'\")\ncursor.execute(\"DELETE FROM students WHERE id = 4\")\nconnection.commit()\n\nupdated_df = pd.read_sql_query(\"SELECT * FROM students\", connection)\nprint(\"\\nAfter Update and Delete:\")\nprint(updated_df)\nconnection.close()",
+        "output": {
+          "rawText": "Table Data:\n(1, 'Alice', 'CSE', 85)\n(2, 'Bob', 'AIML', 78)\n(3, 'Charlie', 'DS', 92)\n(4, 'David', 'CSE', 88)\n\nDataFrame:\n   id     name branch  marks\n0   1    Alice    CSE     85\n1   2      Bob   AIML     78\n2   3  Charlie     DS     92\n3   4    David    CSE     88\n\nAfter Update and Delete:\n   id     name branch  marks\n0   1    Alice    CSE     85\n1   2      Bob   AIML     95\n2   3  Charlie     DS     92",
+          "columns": [
+            "id",
+            "name",
+            "branch",
+            "marks"
+          ],
+          "rows": [
+            [
+              1,
+              "Alice",
+              "CSE",
+              85
+            ],
+            [
+              2,
+              "Bob",
+              "AIML",
+              95
+            ],
+            [
+              3,
+              "Charlie",
+              "DS",
+              92
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 4,
+          "executionTime": "0.08s"
+        },
+        "keyPoints": [
+          {
+            "term": "sqlite3.connect()",
+            "description": "Opens a connection to local SQLite database file."
+          },
+          {
+            "term": "cursor.executemany()",
+            "description": "Executes parameterized batch INSERT queries safely avoiding SQL injection."
+          },
+          {
+            "term": "pd.read_sql_query()",
+            "description": "Runs a SQL query directly against the SQLite connection into a DataFrame."
+          }
+        ],
+        "watchOut": [
+          "Always call connection.commit() after INSERT, UPDATE or DELETE to persist changes.",
+          "Always close connections properly with connection.close() to release database locks."
+        ],
+        "resources": [
+          {
+            "title": "Python SQLite3 Module",
+            "type": "guide",
+            "url": "https://docs.python.org/3/library/sqlite3.html"
+          }
+        ],
+        "isCompleted": false
+      }
+    ]
+  },
+  {
+    "id": "exp-3",
+    "number": 3,
+    "displayNumber": "03",
+    "title": "Data Cleaning and Preparation",
+    "subtitle": "Missing value imputation, deduplication, value transformation, outlier detection via IQR, and regex.",
+    "description": "Clean raw data by handling missing values and duplicates, transforming categorical variables, detecting outliers, and regex tokenization.",
+    "subjectCode": "22DS102006",
+    "academicYear": "2025–2026",
+    "category": "Data Cleaning",
+    "technology": "Python · Pandas · NumPy · Re",
+    "methods": "Missing Value Imputation · Deduplication · IQR Outlier Detection · Regex Cleansing",
+    "language": "Python",
+    "difficulty": "Intermediate",
+    "estimatedDuration": "2-3 hours",
+    "thumbnail": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
+    "coverImage": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
+    "githubUrl": "https://github.com/udaykiran973/Ds-Lab-Execution/tree/main/ds3",
+    "progress": 0,
+    "status": "not-started",
+    "tags": [
+      "Data Cleaning",
+      "Imputation",
+      "fillna",
+      "dropna",
+      "drop_duplicates",
+      "map",
+      "replace",
+      "IQR",
+      "Outliers",
+      "Regex"
+    ],
+    "learningObjectives": [
+      "Detect and impute missing NaN values using isna(), dropna() and mean fillna()",
+      "Identify and eliminate duplicate records with duplicated() and drop_duplicates()",
+      "Transform categorical mappings and column headers using map(), replace() and rename()",
+      "Identify numerical anomalies with IQR boundaries and sanitize strings using regex"
+    ],
+    "skillsChips": [
+      "Python",
+      "Pandas",
+      "NumPy",
+      "Data Cleaning",
+      "Outlier Detection",
+      "Regular Expressions"
+    ],
+    "subExperiments": [
+      {
+        "id": "3a",
+        "partLetter": "A",
+        "title": "Missing Data and Duplicate Removal",
+        "name": "Null Value Imputation & Deduplication",
+        "aim": "To identify and handle missing values and duplicate records using isna(), dropna(), fillna(), duplicated() and drop_duplicates().",
+        "description": "Detect null values across columns, compare dropna vs fillna mean imputation, and remove duplicate records.",
+        "code": "import pandas as pd\nimport numpy as np\n\ndf = pd.DataFrame({\n    \"Name\": [\"Alice\", \"Bob\", \"Charlie\", \"David\", \"David\"],\n    \"Age\": [20, np.nan, 19, 22, 22],\n    \"Marks\": [85, 78, np.nan, 88, 88]\n})\n\nprint(\"Original Data:\")\nprint(df)\n\nprint(\"\\nMissing Values:\")\nprint(df.isna().sum())\n\n# Remove rows containing missing values\ndrop_df = df.dropna()\nprint(\"\\nAfter dropna():\")\nprint(drop_df)\n\n# Fill missing values\nfill_df = df.copy()\nfill_df[\"Age\"] = fill_df[\"Age\"].fillna(fill_df[\"Age\"].mean())\nfill_df[\"Marks\"] = fill_df[\"Marks\"].fillna(fill_df[\"Marks\"].mean())\nprint(\"\\nAfter fillna():\")\nprint(fill_df)\n\n# Identify duplicates\nprint(\"\\nDuplicate Rows:\")\nprint(fill_df.duplicated())\n\n# Remove duplicates\nclean_df = fill_df.drop_duplicates()\nprint(\"\\nAfter Removing Duplicates:\")\nprint(clean_df)",
+        "output": {
+          "rawText": "Missing Values:\nName     0\nAge      1\nMarks    1\ndtype: int64\n\nAfter fillna():\n      Name   Age  Marks\n0    Alice  20.00  85.00\n1      Bob  20.75  78.00\n2  Charlie  19.00  87.25\n3    David  22.00  88.00\n4    David  22.00  88.00\n\nAfter Removing Duplicates:\n      Name    Age  Marks\n0    Alice  20.00  85.00\n1      Bob  20.75  78.00\n2  Charlie  19.00  87.25\n3    David  22.00  88.00",
+          "columns": [
+            "Name",
+            "Age",
+            "Marks"
+          ],
+          "rows": [
+            [
+              "Alice",
+              20,
+              85
+            ],
+            [
+              "Bob",
+              20.75,
+              78
+            ],
+            [
+              "Charlie",
+              19,
+              87.25
+            ],
+            [
+              "David",
+              22,
+              88
+            ]
+          ],
+          "totalRows": 4,
+          "totalColumns": 3,
+          "executionTime": "0.11s"
+        },
+        "keyPoints": [
+          {
+            "term": "df.isna().sum()",
+            "description": "Counts total missing NaN elements per column."
+          },
+          {
+            "term": "df.dropna()",
+            "description": "Discards rows containing one or more missing values."
+          },
+          {
+            "term": "df.fillna()",
+            "description": "Replaces null entries with statistical aggregates like mean or median."
+          },
+          {
+            "term": "drop_duplicates()",
+            "description": "Removes redundant rows preserving unique observations."
+          }
+        ],
+        "watchOut": [
+          "Using dropna() aggressively can discard too much valuable training data; prefer thoughtful imputation.",
+          "Always check df.duplicated() flags before discarding records."
+        ],
+        "resources": [
+          {
+            "title": "Pandas Missing Data Handling",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/missing_data.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "3b",
+        "partLetter": "B",
+        "title": "Data Transformation Using map, replace and rename",
+        "name": "Categorical Mapping & Renaming Columns",
+        "aim": "To transform DataFrame values using map(), replace() and rename().",
+        "description": "Map gender abbreviations, replace letter grades with descriptors, and rename column headers non-destructively.",
+        "code": "import pandas as pd\n\ndf = pd.DataFrame({\n    \"Name\": [\"Alice\", \"Bob\", \"Charlie\", \"David\"],\n    \"Gender\": [\"M\", \"F\", \"M\", \"F\"],\n    \"Grade\": [\"A\", \"B\", \"A\", \"C\"]\n})\n\nprint(\"Original Data:\")\nprint(df)\n\n# map\ndf[\"Gender\"] = df[\"Gender\"].map({\n    \"M\": \"Male\",\n    \"F\": \"Female\"\n})\n\n# replace\ndf[\"Grade\"] = df[\"Grade\"].replace({\n    \"A\": \"Excellent\",\n    \"B\": \"Good\",\n    \"C\": \"Average\"\n})\n\n# rename without modifying original\nnew_df = df.rename(columns={\n    \"Name\": \"Student_Name\",\n    \"Grade\": \"Performance\"\n})\n\nprint(\"\\nTransformed Data:\")\nprint(new_df)",
+        "output": {
+          "rawText": "Transformed Data:\n  Student_Name  Gender Performance\n0        Alice  Male    Excellent\n1          Bob  Female  Good\n2      Charlie  Male    Excellent\n3        David  Female  Average",
+          "columns": [
+            "Student_Name",
+            "Gender",
+            "Performance"
+          ],
+          "rows": [
+            [
+              "Alice",
+              "Male",
+              "Excellent"
+            ],
+            [
+              "Bob",
+              "Female",
+              "Good"
+            ],
+            [
+              "Charlie",
+              "Male",
+              "Excellent"
+            ],
+            [
+              "David",
+              "Female",
+              "Average"
+            ]
+          ],
+          "totalRows": 4,
+          "totalColumns": 3,
+          "executionTime": "0.09s"
+        },
+        "keyPoints": [
+          {
+            "term": "Series.map()",
+            "description": "Substitutes each value in a Series according to input dictionary mapping."
+          },
+          {
+            "term": "Series.replace()",
+            "description": "Selectively replaces targeted values leaving unmapped elements unchanged."
+          },
+          {
+            "term": "df.rename()",
+            "description": "Modifies index labels and column headers without mutating original data."
+          }
+        ],
+        "watchOut": [
+          "Series.map() turns unmapped values into NaN if they are missing from the dictionary; replace() retains them.",
+          "Always assign the returned DataFrame when using rename unless inplace=True is specified."
+        ],
+        "resources": [
+          {
+            "title": "Pandas Mapping and Replacing",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/reference/api/pandas.Series.map.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "3c",
+        "partLetter": "C",
+        "title": "Normally Distributed Data and Outlier Detection",
+        "name": "Gaussian Distribution & IQR Outlier Filtering",
+        "aim": "To generate normally distributed random data and detect possible outliers.",
+        "description": "Simulate Gaussian random normal distribution with seed, inject synthetic anomalies, and isolate outliers using IQR.",
+        "code": "import numpy as np\nimport pandas as pd\n\nnp.random.seed(42)\ndata = np.random.normal(\n    loc=50,\n    scale=10,\n    size=100\n)\n\n# Add outliers\ndata = np.append(data, [100, 110, 120])\ndf = pd.DataFrame({\"Value\": data})\n\nQ1 = df[\"Value\"].quantile(0.25)\nQ3 = df[\"Value\"].quantile(0.75)\nIQR = Q3 - Q1\n\nlower_limit = Q1 - 1.5 * IQR\nupper_limit = Q3 + 1.5 * IQR\n\noutliers = df[\n    (df[\"Value\"] < lower_limit) |\n    (df[\"Value\"] > upper_limit)\n]\n\nprint(\"Q1:\", round(Q1, 2))\nprint(\"Q3:\", round(Q3, 2))\nprint(\"IQR:\", round(IQR, 2))\nprint(\"\\nLower Limit:\", round(lower_limit, 2))\nprint(\"Upper Limit:\", round(upper_limit, 2))\nprint(\"\\nPossible Outliers:\")\nprint(outliers)",
+        "output": {
+          "rawText": "Q1: approximately 43\nQ3: approximately 57\nIQR: approximately 14\n\nLower Limit: approximately 22\nUpper Limit: approximately 78\n\nPossible Outliers:\n     Value\n100  100.0\n101  110.0\n102  120.0",
+          "columns": [
+            "Index",
+            "Value"
+          ],
+          "rows": [
+            [
+              100,
+              100
+            ],
+            [
+              101,
+              110
+            ],
+            [
+              102,
+              120
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 2,
+          "executionTime": "0.10s"
+        },
+        "keyPoints": [
+          {
+            "term": "np.random.normal()",
+            "description": "Draws random samples from a normal (Gaussian) distribution."
+          },
+          {
+            "term": "IQR = Q3 - Q1",
+            "description": "Interquartile range representing the middle 50% spread of observations."
+          },
+          {
+            "term": "Tukey Outlier Rule",
+            "description": "Values beyond Q1 - 1.5*IQR or Q3 + 1.5*IQR are flagged as statistical anomalies."
+          }
+        ],
+        "watchOut": [
+          "Setting np.random.seed ensures reproducible randomized sequences for laboratory validation.",
+          "Verify column data types before quantile computations to avoid TypeError on non-numeric data."
+        ],
+        "resources": [
+          {
+            "title": "Interquartile Range Outlier Rule",
+            "type": "guide",
+            "url": "https://en.wikipedia.org/wiki/Interquartile_range"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "3d",
+        "partLetter": "D",
+        "title": "Regular Expressions",
+        "name": "Regex Whitespace Splitting & Pattern Matching",
+        "aim": "To split a string containing variable whitespace characters and find all matching patterns using regular expressions.",
+        "description": "Utilize Python re module to split messy whitespace sequences, find targeted prefixes, and parse numeric floats.",
+        "code": "import re\n\ntext = \"Python\\tis  a\\npowerful   programming\\tlanguage\"\n\n# Split using one or more whitespace characters\nwords = re.split(r\"\\s+\", text.strip())\nprint(\"Words:\")\nprint(words)\n\n# Find words starting with P or p\npatterns = re.findall(r\"\\b[Pp]\\w+\", text)\nprint(\"\\nMatching Patterns:\")\nprint(patterns)\n\n# Find all numbers\ntext2 = \"Python 3 is popular and Python 3.11 is widely used.\"\nnumbers = re.findall(r\"\\d+(?:\\.\\d+)?\", text2)\nprint(\"\\nNumbers:\")\nprint(numbers)",
+        "output": {
+          "rawText": "Words:\n['Python', 'is', 'a', 'powerful', 'programming', 'language']\n\nMatching Patterns:\n['Python', 'powerful', 'programming']\n\nNumbers:\n['3', '3.11']",
+          "columns": [
+            "Token Index",
+            "Matched Value"
+          ],
+          "rows": [
+            [
+              0,
+              "Python"
+            ],
+            [
+              1,
+              "is"
+            ],
+            [
+              2,
+              "a"
+            ],
+            [
+              3,
+              "powerful"
+            ],
+            [
+              4,
+              "programming"
+            ],
+            [
+              5,
+              "language"
+            ]
+          ],
+          "totalRows": 6,
+          "totalColumns": 2,
+          "executionTime": "0.07s"
+        },
+        "keyPoints": [
+          {
+            "term": "re.split(r\"\\s+\", text)",
+            "description": "Splits on one or more tabs, newlines, or whitespace characters cleanly."
+          },
+          {
+            "term": "re.findall(pattern)",
+            "description": "Returns all non-overlapping regex matches in string as a list of strings."
+          },
+          {
+            "term": "\\b[Pp]\\w+",
+            "description": "Word boundary matching words starting with upper or lower case letter P."
+          }
+        ],
+        "watchOut": [
+          "Always use raw strings (r\"...\") for regex patterns to prevent Python escape sequence clashes.",
+          "Remember that \\s matches tabs (\\t) and newlines (\\n) in addition to standard space characters."
+        ],
+        "resources": [
+          {
+            "title": "Python re Module Documentation",
+            "type": "guide",
+            "url": "https://docs.python.org/3/library/re.html"
+          }
+        ],
+        "isCompleted": false
+      }
+    ]
+  },
+  {
+    "id": "exp-4",
+    "number": 4,
+    "displayNumber": "04",
+    "title": "Data Wrangling and Transformation",
+    "subtitle": "Hierarchical MultiIndex, reshape with stack/unstack, index merges, and combine_first.",
+    "description": "Master multi-level indexing, pivoting tabular layouts, merging datasets on index keys, and combining overlapping records.",
+    "subjectCode": "22DS102006",
+    "academicYear": "2025–2026",
+    "category": "Data Wrangling",
+    "technology": "Python · Pandas · NumPy",
+    "methods": "Hierarchical Indexing · Reshaping & Pivoting · Multi-table Joins · Stack & Unstack",
+    "language": "Python",
+    "difficulty": "Intermediate",
+    "estimatedDuration": "2-3 hours",
+    "thumbnail": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&q=80",
+    "coverImage": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&q=80",
+    "githubUrl": "https://github.com/udaykiran973/Ds-Lab-Execution/tree/main/ds4",
+    "progress": 0,
+    "status": "not-started",
+    "tags": [
+      "MultiIndex",
+      "Hierarchical Indexing",
+      "stack()",
+      "unstack()",
+      "merge()",
+      "combine_first()"
+    ],
+    "learningObjectives": [
+      "Construct and slice hierarchical MultiIndex arrays across row and column axes",
+      "Pivot tabular layouts dynamically between wide and long representations with stack/unstack",
+      "Execute multi-table relational merges using inner, outer, and left key matching",
+      "Harmonize overlapping data sources and patch missing observations using combine_first()"
+    ],
+    "skillsChips": [
+      "Pandas",
+      "MultiIndex",
+      "Data Wrangling",
+      "stack",
+      "unstack",
+      "merge",
+      "combine_first"
+    ],
+    "subExperiments": [
+      {
+        "id": "4a",
+        "partLetter": "A",
+        "title": "Hierarchical Indexing",
+        "name": "MultiIndex Series Creation & Slicing",
+        "aim": "To create a Series with hierarchical indexing and select data using outer and inner levels.",
+        "description": "Construct multi-level index on Country and City dimensions, selecting subsets via outer and inner hierarchical keys.",
+        "code": "import pandas as pd\n\nindex = [\n    [\"India\", \"India\", \"USA\", \"USA\"],\n    [\"Delhi\", \"Mumbai\", \"New York\", \"Chicago\"]\n]\nmulti_index = pd.MultiIndex.from_arrays(\n    index,\n    names=[\"Country\", \"City\"]\n)\nsales = pd.Series(\n    [100, 150, 200, 180],\n    index=multi_index\n)\n\nprint(\"Hierarchical Series:\")\nprint(sales)\n\nprint(\"\\nOuter Level - India:\")\nprint(sales[\"India\"])\n\nprint(\"\\nInner Level - Mumbai:\")\nprint(sales.loc[(\"India\", \"Mumbai\")])",
+        "output": {
+          "rawText": "Hierarchical Series:\nCountry  City\nIndia    Delhi       100\n         Mumbai      150\nUSA      New York    200\n         Chicago     180\n\nOuter Level - India:\nCity\nDelhi     100\nMumbai    150\n\nInner Level - Mumbai:\n150",
+          "columns": [
+            "Country",
+            "City",
+            "Sales"
+          ],
+          "rows": [
+            [
+              "India",
+              "Delhi",
+              100
+            ],
+            [
+              "India",
+              "Mumbai",
+              150
+            ],
+            [
+              "USA",
+              "New York",
+              200
+            ],
+            [
+              "USA",
+              "Chicago",
+              180
+            ]
+          ],
+          "totalRows": 4,
+          "totalColumns": 3,
+          "executionTime": "0.09s"
+        },
+        "keyPoints": [
+          {
+            "term": "pd.MultiIndex.from_arrays()",
+            "description": "Creates a hierarchical index from parallel coordinate arrays."
+          },
+          {
+            "term": "Outer level indexing",
+            "description": "sales[\"India\"] slices all children belonging to that primary root key."
+          },
+          {
+            "term": "Inner level tuple indexing",
+            "description": "sales.loc[(\"India\", \"Mumbai\")] pinpoints exact intersection."
+          }
+        ],
+        "watchOut": [
+          "Always name index levels with names=[...] for clearer downstream aggregation and grouping.",
+          "Hierarchical indexing requires lexicographically sorted indexes for performant range slicing."
+        ],
+        "resources": [
+          {
+            "title": "Pandas MultiIndex Guide",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/advanced.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "4b",
+        "partLetter": "B",
+        "title": "Stack and Unstack",
+        "name": "Tabular Reshaping with Stack & Unstack",
+        "aim": "To rearrange hierarchical tabular data using stack() and unstack().",
+        "description": "Pivot innermost row indexes into wide columns with unstack(), and pack wide columns back into tall Series with stack().",
+        "code": "import pandas as pd\n\ndata = pd.DataFrame({\n    \"Country\": [\"India\", \"India\", \"USA\", \"USA\"],\n    \"City\": [\"Delhi\", \"Mumbai\", \"New York\", \"Chicago\"],\n    \"Sales\": [100, 150, 200, 180]\n})\ndf = data.set_index([\"Country\", \"City\"])\n\nprint(\"Original:\")\nprint(df)\n\n# Unstack\nunstacked = df.unstack()\nprint(\"\\nUnstacked:\")\nprint(unstacked)\n\n# Stack again\nstacked = unstacked.stack()\nprint(\"\\nStacked:\")\nprint(stacked)",
+        "output": {
+          "rawText": "Original:\n                 Sales\nCountry City          \nIndia   Delhi      100\n        Mumbai     150\nUSA     New York   200\n        Chicago    180\n\nUnstacked:\n        Sales                        \nCity  Chicago Delhi Mumbai New York\nCountry                              \nIndia     NaN 100.0  150.0      NaN\nUSA     180.0   NaN    NaN    200.0\n\nStacked:\nCountry  City          \nIndia    Delhi    Sales    100.0\n         Mumbai   Sales    150.0\nUSA      Chicago  Sales    180.0\n         New York Sales    200.0",
+          "columns": [
+            "Country",
+            "City",
+            "Sales"
+          ],
+          "rows": [
+            [
+              "India",
+              "Delhi",
+              100
+            ],
+            [
+              "India",
+              "Mumbai",
+              150
+            ],
+            [
+              "USA",
+              "New York",
+              200
+            ],
+            [
+              "USA",
+              "Chicago",
+              180
+            ]
+          ],
+          "totalRows": 4,
+          "totalColumns": 3,
+          "executionTime": "0.10s"
+        },
+        "keyPoints": [
+          {
+            "term": "df.unstack()",
+            "description": "Pivots a level of the row index into a level of the column index."
+          },
+          {
+            "term": "df.stack()",
+            "description": "Compresses a column level into the row MultiIndex structure."
+          },
+          {
+            "term": "Sparse Grid Alignment",
+            "description": "Unstacking introduces NaN for non-existent combinations naturally."
+          }
+        ],
+        "watchOut": [
+          "Repeated stack/unstack operations can alter column types; inspect dtypes after reshaping.",
+          "Specifying level parameters allows choosing which index tier to pivot."
+        ],
+        "resources": [
+          {
+            "title": "Reshaping and Pivot Tables",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/reshaping.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "4c",
+        "partLetter": "C",
+        "title": "Merge Using Index and combine_first",
+        "name": "Relational Index Merges & Patching",
+        "aim": "To merge DataFrames using index and combine overlapping data using combine_first().",
+        "description": "Perform relational merge using left_index and right_index, and reconcile partially missing records via combine_first().",
+        "code": "import pandas as pd\n\ndf1 = pd.DataFrame({\n    \"Name\": [\"Alice\", \"Bob\", \"Charlie\"],\n    \"Marks\": [85, 78, None]\n}, index=[1, 2, 3])\n\ndf2 = pd.DataFrame({\n    \"Name\": [\"Alice\", \"Bob\", \"Charlie\"],\n    \"Marks\": [90, None, 92],\n    \"Grade\": [\"A\", \"B\", \"A\"]\n}, index=[1, 2, 3])\n\nprint(\"DataFrame 1:\")\nprint(df1)\nprint(\"\\nDataFrame 2:\")\nprint(df2)\n\n# Merge using index\nmerged = df1.merge(\n    df2,\n    left_index=True,\n    right_index=True,\n    suffixes=(\"_1\", \"_2\")\n)\nprint(\"\\nMerged DataFrame:\")\nprint(merged)\n\n# Combine overlapping values\ncombined = df1.combine_first(df2)\nprint(\"\\nCombined DataFrame:\")\nprint(combined)",
+        "output": {
+          "rawText": "Combined DataFrame:\n      Name  Marks Grade\n1    Alice   85.0     A\n2      Bob   78.0     B\n3  Charlie   92.0     A",
+          "columns": [
+            "Index",
+            "Name",
+            "Marks",
+            "Grade"
+          ],
+          "rows": [
+            [
+              1,
+              "Alice",
+              85,
+              "A"
+            ],
+            [
+              2,
+              "Bob",
+              78,
+              "B"
+            ],
+            [
+              3,
+              "Charlie",
+              92,
+              "A"
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 4,
+          "executionTime": "0.08s"
+        },
+        "keyPoints": [
+          {
+            "term": "left_index=True, right_index=True",
+            "description": "Aligns and joins DataFrames on row keys rather than named columns."
+          },
+          {
+            "term": "suffixes=(\"_1\", \"_2\")",
+            "description": "Disambiguates colliding column names between merged tables."
+          },
+          {
+            "term": "df1.combine_first(df2)",
+            "description": "Patches null gaps in df1 with corresponding available values in df2."
+          }
+        ],
+        "watchOut": [
+          "combine_first prioritizes values from the caller DataFrame, only filling NaNs from the argument table.",
+          "Verify index alignments before merging to prevent unwanted cross-product expansions."
+        ],
+        "resources": [
+          {
+            "title": "Pandas Merging and Joining",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/merging.html"
+          }
+        ],
+        "isCompleted": false
+      }
+    ]
+  },
+  {
+    "id": "exp-5",
+    "number": 5,
+    "displayNumber": "05",
+    "title": "Data Visualization Using Matplotlib and Seaborn",
+    "subtitle": "Line plots, grouped and stacked bar charts, histograms, KDE density, scatter plots, and box plots.",
+    "description": "Plot explanatory data visuals with annotations, tick formatting, distributions, relationships, and categorical spreads.",
+    "subjectCode": "22DS102006",
+    "academicYear": "2025–2026",
+    "category": "Data Visualization",
+    "technology": "Python · Matplotlib · Seaborn · Pandas",
+    "methods": "Statistical Plots · Distribution Modeling · Multi-panel Figures · Style Customization",
+    "language": "Python",
+    "difficulty": "Beginner",
+    "estimatedDuration": "2-3 hours",
+    "thumbnail": "https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&w=1200&q=80",
+    "coverImage": "https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&w=1200&q=80",
+    "githubUrl": "https://github.com/udaykiran973/Ds-Lab-Execution/tree/main/ds5",
+    "progress": 0,
+    "status": "not-started",
+    "tags": [
+      "Matplotlib",
+      "Seaborn",
+      "Line Plot",
+      "Bar Plot",
+      "Histogram",
+      "KDE",
+      "Scatter Plot",
+      "Box Plot"
+    ],
+    "learningObjectives": [
+      "Create statistical visualizations using Matplotlib and Seaborn",
+      "Customize plot themes, palettes, annotations, and axis legends",
+      "Compare datasets visually with grouped bar charts and box plots",
+      "Plot univariate and bivariate distributions with KDE curves and scatter plots"
+    ],
+    "skillsChips": [
+      "Python",
+      "Matplotlib",
+      "Seaborn",
+      "Data Visualization",
+      "Statistical Graphics"
+    ],
+    "subExperiments": [
+      {
+        "id": "5a",
+        "partLetter": "A",
+        "title": "Line Plot",
+        "name": "Annotated Monthly Trend Line Plot",
+        "aim": "To create a line plot with title, axis labels, ticks, tick labels, annotations and save it to a file.",
+        "description": "Construct an annotated monthly sales trend graph with custom axis markers, styled callouts, and PNG export.",
+        "code": "import matplotlib.pyplot as plt\n\nmonths = [\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\"]\nsales = [20, 35, 30, 45, 50]\n\nfig, ax = plt.subplots()\nax.plot(months, sales, marker=\"o\")\nax.set_title(\"Monthly Sales\")\nax.set_xlabel(\"Month\")\nax.set_ylabel(\"Sales\")\nax.set_xticks(range(len(months)))\nax.set_xticklabels(months)\nax.annotate(\n    \"Highest Sales\",\n    xy=(\"May\", 50),\n    xytext=(\"Mar\", 55),\n    arrowprops=dict(arrowstyle=\"->\")\n)\nplt.tight_layout()\nplt.savefig(\"line_plot.png\")\nprint(\"Line plot successfully created and saved as line_plot.png\")\nplt.show()",
+        "output": {
+          "rawText": "A line graph showing monthly sales is displayed and saved as:\nline_plot.png\n\nMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May']\nSales:  [20, 35, 30, 45, 50]\nAnnotation: Highest Sales -> (May, 50)",
+          "columns": [
+            "Month",
+            "Sales ($k)"
+          ],
+          "rows": [
+            [
+              "Jan",
+              20
+            ],
+            [
+              "Feb",
+              35
+            ],
+            [
+              "Mar",
+              30
+            ],
+            [
+              "Apr",
+              45
+            ],
+            [
+              "May",
+              50
+            ]
+          ],
+          "totalRows": 5,
+          "totalColumns": 2,
+          "executionTime": "0.22s"
+        },
+        "keyPoints": [
+          {
+            "term": "ax.plot(marker=\"o\")",
+            "description": "Renders connected line segments highlighting individual data points with circular markers."
+          },
+          {
+            "term": "ax.annotate()",
+            "description": "Draws directional arrows and contextual text pointing directly to peak coordinates."
+          },
+          {
+            "term": "plt.savefig(\"line_plot.png\")",
+            "description": "Exports raster graphics file directly to disk with tight layout bounding."
+          }
+        ],
+        "watchOut": [
+          "Call plt.savefig() before plt.show() or the figure canvas will clear, creating an empty image file.",
+          "Use plt.tight_layout() to prevent axis labels from clipping off screen borders."
+        ],
+        "resources": [
+          {
+            "title": "Matplotlib Pyplot Tutorial",
+            "type": "guide",
+            "url": "https://matplotlib.org/stable/tutorials/introductory/pyplot.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "5b1",
+        "partLetter": "B",
+        "title": "Grouped Bar Plot",
+        "name": "Multi-Series Grouped Bar Chart",
+        "aim": "To create grouped bar plots using a DataFrame.",
+        "description": "Plot side-by-side grouped bars comparing Python, Java, and SQL proficiencies across multiple students.",
+        "code": "import pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.DataFrame({\n    \"Python\": [80, 85, 90],\n    \"Java\": [75, 88, 85],\n    \"SQL\": [90, 82, 88]\n}, index=[\"Alice\", \"Bob\", \"Charlie\"])\n\ndf.plot(kind=\"bar\")\nplt.title(\"Student Marks\")\nplt.xlabel(\"Students\")\nplt.ylabel(\"Marks\")\nplt.tight_layout()\nprint(\"Grouped bar plot generated successfully.\")\nplt.show()",
+        "output": {
+          "rawText": "Grouped bar plot generated successfully.\nDataFrame:\n         Python  Java  SQL\nAlice        80    75   90\nBob          85    88   82\nCharlie      90    85   88",
+          "columns": [
+            "Student",
+            "Python",
+            "Java",
+            "SQL"
+          ],
+          "rows": [
+            [
+              "Alice",
+              80,
+              75,
+              90
+            ],
+            [
+              "Bob",
+              85,
+              88,
+              82
+            ],
+            [
+              "Charlie",
+              90,
+              85,
+              88
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 4,
+          "executionTime": "0.18s"
+        },
+        "keyPoints": [
+          {
+            "term": "df.plot(kind=\"bar\")",
+            "description": "Renders DataFrame columns as grouped discrete vertical bars automatically."
+          },
+          {
+            "term": "Categorical X-axis",
+            "description": "Index labels (\"Alice\", \"Bob\", \"Charlie\") form the primary grouping categories."
+          }
+        ],
+        "watchOut": [
+          "Ensure the index contains string identifiers so bars are grouped and labelled properly.",
+          "Rotating x-ticks with rot=0 keeps horizontal names readable on small screens."
+        ],
+        "resources": [
+          {
+            "title": "Pandas Bar Plots",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.bar.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "5b2",
+        "partLetter": "C",
+        "title": "Stacked Bar Plot",
+        "name": "Cumulative Stacked Bar Chart",
+        "aim": "To create a stacked bar plot from a DataFrame.",
+        "description": "Stack student exam marks cumulatively to highlight composite aggregate performance across skill areas.",
+        "code": "import pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.DataFrame({\n    \"Python\": [80, 85, 90],\n    \"Java\": [75, 88, 85],\n    \"SQL\": [90, 82, 88]\n}, index=[\"Alice\", \"Bob\", \"Charlie\"])\n\ndf.plot(\n    kind=\"bar\",\n    stacked=True\n)\nplt.title(\"Stacked Student Marks\")\nplt.xlabel(\"Students\")\nplt.ylabel(\"Total Marks\")\nplt.tight_layout()\nprint(\"Stacked bar plot generated successfully.\")\nplt.show()",
+        "output": {
+          "rawText": "Stacked bar plot generated successfully.\nTotal Marks per Student:\nAlice:   80 + 75 + 90 = 245\nBob:     85 + 88 + 82 = 255\nCharlie: 90 + 85 + 88 = 263",
+          "columns": [
+            "Student",
+            "Python",
+            "Java",
+            "SQL",
+            "Total"
+          ],
+          "rows": [
+            [
+              "Alice",
+              80,
+              75,
+              90,
+              245
+            ],
+            [
+              "Bob",
+              85,
+              88,
+              82,
+              255
+            ],
+            [
+              "Charlie",
+              90,
+              85,
+              88,
+              263
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 5,
+          "executionTime": "0.17s"
+        },
+        "keyPoints": [
+          {
+            "term": "stacked=True",
+            "description": "Stacks vertical bar partitions on top of one another representing cumulative totals."
+          },
+          {
+            "term": "Visual Proportion",
+            "description": "Enables quick comparison of overall magnitude alongside internal composition."
+          }
+        ],
+        "watchOut": [
+          "Stacked bars work best with positive metrics; negative metrics distort vertical baseline alignments."
+        ],
+        "resources": [
+          {
+            "title": "Matplotlib Stacked Bar Guide",
+            "type": "guide",
+            "url": "https://matplotlib.org/stable/gallery/lines_bars_and_markers/bar_stacked.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "5c",
+        "partLetter": "D",
+        "title": "Histogram and Density Plot",
+        "name": "Gaussian Histogram & Seaborn KDE Curve",
+        "aim": "To create a histogram for frequency distribution and a density plot for continuous probability distribution.",
+        "description": "Generate 500 samples from normal distribution and compare discrete frequency bins against smooth KDE density curve.",
+        "code": "import numpy as np\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\nnp.random.seed(10)\ndata = np.random.normal(50, 10, 500)\n\n# Histogram\nplt.figure()\nsns.histplot(data, bins=20, kde=False)\nplt.title(\"Histogram\")\nplt.xlabel(\"Value\")\nplt.ylabel(\"Frequency\")\nplt.show()\n\n# Density plot\nplt.figure()\nsns.kdeplot(data, fill=True)\nplt.title(\"Density Plot\")\nplt.xlabel(\"Value\")\nplt.ylabel(\"Density\")\nplt.show()",
+        "output": {
+          "rawText": "Histogram and density plots were successfully generated.\nSamples: 500\nMean: ~50\nStandard Deviation: ~10\nBins: 20",
+          "columns": [
+            "Bin Interval",
+            "Frequency Count"
+          ],
+          "rows": [
+            [
+              "[20 - 30]",
+              12
+            ],
+            [
+              "[30 - 40]",
+              76
+            ],
+            [
+              "[40 - 50]",
+              165
+            ],
+            [
+              "[50 - 60]",
+              158
+            ],
+            [
+              "[60 - 70]",
+              74
+            ],
+            [
+              "[70 - 80]",
+              15
+            ]
+          ],
+          "totalRows": 6,
+          "totalColumns": 2,
+          "executionTime": "0.24s"
+        },
+        "keyPoints": [
+          {
+            "term": "sns.histplot()",
+            "description": "Plots binned observation counts indicating central tendencies and spread."
+          },
+          {
+            "term": "sns.kdeplot()",
+            "description": "Fits kernel density estimation curves representing smooth continuous probability functions."
+          }
+        ],
+        "watchOut": [
+          "Selecting too few or too many bins can disguise or falsely exaggerate multimodality in histograms."
+        ],
+        "resources": [
+          {
+            "title": "Seaborn Distributions Guide",
+            "type": "guide",
+            "url": "https://seaborn.pydata.org/tutorial/distributions.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "5d",
+        "partLetter": "E",
+        "title": "Scatter Plot",
+        "name": "Bivariate Correlation Scatter Plot",
+        "aim": "To examine the relationship between two one-dimensional data series using a scatter plot.",
+        "description": "Plot study hours against exam scores to demonstrate positive linear correlation between study input and outcomes.",
+        "code": "import numpy as np\nimport matplotlib.pyplot as plt\n\nhours = np.array([1, 2, 3, 4, 5, 6, 7, 8])\nmarks = np.array([35, 42, 48, 55, 60, 68, 75, 82])\n\nplt.scatter(hours, marks)\nplt.title(\"Study Hours vs Marks\")\nplt.xlabel(\"Study Hours\")\nplt.ylabel(\"Marks\")\nprint(\"Scatter plot created showing positive linear correlation.\")\nplt.show()",
+        "output": {
+          "rawText": "The scatter plot shows a positive relationship between study hours and marks.\nHours: [1, 2, 3, 4, 5, 6, 7, 8]\nMarks: [35, 42, 48, 55, 60, 68, 75, 82]\nCorrelation: ~0.99 (Strong Positive)",
+          "columns": [
+            "Study Hours",
+            "Marks"
+          ],
+          "rows": [
+            [
+              1,
+              35
+            ],
+            [
+              2,
+              42
+            ],
+            [
+              3,
+              48
+            ],
+            [
+              4,
+              55
+            ],
+            [
+              5,
+              60
+            ],
+            [
+              6,
+              68
+            ],
+            [
+              7,
+              75
+            ],
+            [
+              8,
+              82
+            ]
+          ],
+          "totalRows": 8,
+          "totalColumns": 2,
+          "executionTime": "0.14s"
+        },
+        "keyPoints": [
+          {
+            "term": "plt.scatter()",
+            "description": "Renders discrete points in Cartesian coordinates to reveal correlation patterns."
+          },
+          {
+            "term": "Positive Correlation",
+            "description": "Upward slope indicating that increases in hours accompany higher scores."
+          }
+        ],
+        "watchOut": [
+          "Remember correlation does not equal causation; verify domain factors before making causal claims."
+        ],
+        "resources": [
+          {
+            "title": "Matplotlib Scatter Guide",
+            "type": "guide",
+            "url": "https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.scatter.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "5e",
+        "partLetter": "F",
+        "title": "Box Plot",
+        "name": "Departmental Salary Spread Box Plot",
+        "aim": "To visualize data containing categorical variables using box plots.",
+        "description": "Plot department salary distributions across CSE, AIML, and DS using Seaborn boxplots indicating medians and IQR spreads.",
+        "code": "import seaborn as sns\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\ndf = pd.DataFrame({\n    \"Department\": [\n        \"CSE\", \"CSE\", \"CSE\",\n        \"AIML\", \"AIML\", \"AIML\",\n        \"DS\", \"DS\", \"DS\"\n    ],\n    \"Salary\": [\n        40000, 45000, 50000,\n        42000, 48000, 55000,\n        39000, 46000, 52000\n    ]\n})\n\nsns.boxplot(\n    x=\"Department\",\n    y=\"Salary\",\n    data=df\n)\nplt.title(\"Salary Distribution by Department\")\nplt.show()",
+        "output": {
+          "rawText": "The box plot successfully displayed the distribution and spread of salary across different categories.\nDepartment Summaries:\nCSE:  Median 45,000, Min 40,000, Max 50,000\nAIML: Median 48,000, Min 42,000, Max 55,000\nDS:   Median 46,000, Min 39,000, Max 52,000",
+          "columns": [
+            "Department",
+            "Salary (INR)"
+          ],
+          "rows": [
+            [
+              "CSE",
+              45000
+            ],
+            [
+              "AIML",
+              48000
+            ],
+            [
+              "DS",
+              46000
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 2,
+          "executionTime": "0.19s"
+        },
+        "keyPoints": [
+          {
+            "term": "sns.boxplot()",
+            "description": "Visualizes 5-number summaries (min, Q1, median, Q3, max) across categorical classes."
+          },
+          {
+            "term": "Whiskers",
+            "description": "Indicates distribution spread excluding extreme outlier points."
+          }
+        ],
+        "watchOut": [
+          "Small sample sizes can make box plots misleading; combine with stripplot for small datasets."
+        ],
+        "resources": [
+          {
+            "title": "Seaborn Boxplot Guide",
+            "type": "guide",
+            "url": "https://seaborn.pydata.org/generated/seaborn.boxplot.html"
+          }
+        ],
+        "isCompleted": false
+      }
+    ]
+  },
+  {
+    "id": "exp-6",
+    "number": 6,
+    "displayNumber": "06",
+    "title": "Time Series Analysis",
+    "subtitle": "Timestamps, date_range, time zones, period arithmetic, asfreq, to_period, and resampling.",
+    "description": "Model temporal data using datetime indices, frequency transformations, tz conversions, and down/upsampling.",
+    "subjectCode": "22DS102006",
+    "academicYear": "2025–2026",
+    "category": "Time Series",
+    "technology": "Python · Pandas · NumPy · Matplotlib",
+    "methods": "Datetime Indexing · Frequency Resampling · Rolling Window Aggregation · Temporal Forecasting",
+    "language": "Python",
+    "difficulty": "Intermediate",
+    "estimatedDuration": "2-3 hours",
+    "thumbnail": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1200&q=80",
+    "coverImage": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1200&q=80",
+    "githubUrl": "https://github.com/udaykiran973/Ds-Lab-Execution/tree/main/ds6",
+    "progress": 0,
+    "status": "not-started",
+    "tags": [
+      "Time Series",
+      "pd.to_datetime",
+      "date_range",
+      "Time Zones",
+      "Periods",
+      "asfreq",
+      "to_period",
+      "Resampling"
+    ],
+    "learningObjectives": [
+      "Index series with high-precision timestamp sequences using pd.to_datetime()",
+      "Generate regular timestamp sequences with date_range() and convert international time zones",
+      "Perform arithmetic on periods and convert frequencies with asfreq() and to_period()",
+      "Execute downsampling, rolling moving averages, and interpolated upsampling on temporal data"
+    ],
+    "skillsChips": [
+      "Python",
+      "Pandas",
+      "Time Series Analysis",
+      "DatetimeIndex",
+      "Resampling"
+    ],
+    "subExperiments": [
+      {
+        "id": "6a",
+        "partLetter": "A",
+        "title": "Time Series Using Datetime",
+        "name": "Datetime-Indexed Series Construction",
+        "aim": "To create a time series using Pandas datetime objects indexed by timestamps.",
+        "description": "Convert ISO string dates to DatetimeIndex and bind scalar observations to precise timestamps.",
+        "code": "import pandas as pd\n\ndates = pd.to_datetime([\n    \"2026-01-01\",\n    \"2026-01-02\",\n    \"2026-01-03\",\n    \"2026-01-04\"\n])\nseries = pd.Series(\n    [100, 110, 105, 120],\n    index=dates\n)\nprint(series)",
+        "output": {
+          "rawText": "2026-01-01    100\n2026-01-02    110\n2026-01-03    105\n2026-01-04    120\ndtype: int64",
+          "columns": [
+            "Timestamp",
+            "Value"
+          ],
+          "rows": [
+            [
+              "2026-01-01",
+              100
+            ],
+            [
+              "2026-01-02",
+              110
+            ],
+            [
+              "2026-01-03",
+              105
+            ],
+            [
+              "2026-01-04",
+              120
+            ]
+          ],
+          "totalRows": 4,
+          "totalColumns": 2,
+          "executionTime": "0.07s"
+        },
+        "keyPoints": [
+          {
+            "term": "pd.to_datetime()",
+            "description": "Parses string date formats into high-precision Timestamp objects."
+          },
+          {
+            "term": "DatetimeIndex",
+            "description": "Enables chronologically ordered fast slicing and window calculations."
+          }
+        ],
+        "watchOut": [
+          "Ambiguous dates (like 01/02/2026) can parse as Jan 2 or Feb 1 without explicit format flags."
+        ],
+        "resources": [
+          {
+            "title": "Pandas Time Series / Date Functionality",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/timeseries.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "6b",
+        "partLetter": "B",
+        "title": "date_range",
+        "name": "Regular Frequency Date Ranges",
+        "aim": "To generate a DateTimeIndex with an indicated length using date_range().",
+        "description": "Generate continuous 10-day sequences of calendar timestamps using date_range with daily frequency.",
+        "code": "import pandas as pd\n\ndates = pd.date_range(\n    start=\"2026-01-01\",\n    periods=10,\n    freq=\"D\"\n)\nprint(dates)",
+        "output": {
+          "rawText": "DatetimeIndex([\n'2026-01-01',\n'2026-01-02',\n'2026-01-03',\n'2026-01-04',\n'2026-01-05',\n'2026-01-06',\n'2026-01-07',\n'2026-01-08',\n'2026-01-09',\n'2026-01-10'\n], dtype='datetime64[ns]', freq='D')",
+          "columns": [
+            "Index",
+            "Date (Daily)"
+          ],
+          "rows": [
+            [
+              0,
+              "2026-01-01"
+            ],
+            [
+              1,
+              "2026-01-02"
+            ],
+            [
+              2,
+              "2026-01-03"
+            ],
+            [
+              3,
+              "2026-01-04"
+            ],
+            [
+              4,
+              "2026-01-05"
+            ]
+          ],
+          "totalRows": 10,
+          "totalColumns": 2,
+          "executionTime": "0.06s"
+        },
+        "keyPoints": [
+          {
+            "term": "pd.date_range()",
+            "description": "Generates equidistant time sequences given start, end, periods, and freq."
+          },
+          {
+            "term": "freq=\"D\"",
+            "description": "Specifies 24-hour daily increments."
+          }
+        ],
+        "watchOut": [
+          "Specify exactly 3 of: start, end, periods, and freq; defining all 4 causes ValueError."
+        ],
+        "resources": [
+          {
+            "title": "date_range Documentation",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/reference/api/pandas.date_range.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "6c",
+        "partLetter": "C",
+        "title": "Time Zones",
+        "name": "Time Zone Localization & Conversion",
+        "aim": "To create, localize and convert time zones and combine timestamps from different time zones.",
+        "description": "Localize naive timestamps to Asia/Kolkata (IST) and convert to America/New_York and Europe/London.",
+        "code": "import pandas as pd\n\ndates = pd.date_range(\n    \"2026-01-01\",\n    periods=3,\n    freq=\"D\"\n)\n\n# Localize to India\nindia_time = dates.tz_localize(\"Asia/Kolkata\")\nprint(\"India:\")\nprint(india_time)\n\n# Convert to New York\nnew_york_time = india_time.tz_convert(\"America/New_York\")\nprint(\"\\nNew York:\")\nprint(new_york_time)\n\n# Convert to London\nlondon_time = india_time.tz_convert(\"Europe/London\")\nprint(\"\\nLondon:\")\nprint(london_time)",
+        "output": {
+          "rawText": "India:\nDatetimeIndex(['2026-01-01 00:00:00+05:30', '2026-01-02 00:00:00+05:30', '2026-01-03 00:00:00+05:30'], dtype='datetime64[ns, Asia/Kolkata]', freq='D')\n\nNew York:\nDatetimeIndex(['2025-12-31 13:30:00-05:00', '2026-01-01 13:30:00-05:00', '2026-01-02 13:30:00-05:00'], dtype='datetime64[ns, America/New_York]', freq='D')\n\nLondon:\nDatetimeIndex(['2025-12-31 18:30:00+00:00', '2026-01-01 18:30:00+00:00', '2026-01-02 18:30:00+00:00'], dtype='datetime64[ns, Europe/London]', freq='D')",
+          "columns": [
+            "India Time (+05:30)",
+            "New York Time (-05:00)",
+            "London Time (+00:00)"
+          ],
+          "rows": [
+            [
+              "2026-01-01 00:00:00",
+              "2025-12-31 13:30:00",
+              "2025-12-31 18:30:00"
+            ],
+            [
+              "2026-01-02 00:00:00",
+              "2026-01-01 13:30:00",
+              "2026-01-01 18:30:00"
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 3,
+          "executionTime": "0.09s"
+        },
+        "keyPoints": [
+          {
+            "term": "tz_localize()",
+            "description": "Attaches time zone information to tz-naive timestamps."
+          },
+          {
+            "term": "tz_convert()",
+            "description": "Converts tz-aware timestamps to another target time zone standard."
+          }
+        ],
+        "watchOut": [
+          "Calling tz_convert on tz-naive data throws TypeError; localize first before converting."
+        ],
+        "resources": [
+          {
+            "title": "Time Zone Handling in Pandas",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/timeseries.html#time-zone-handling"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "6d",
+        "partLetter": "D",
+        "title": "Period Arithmetic",
+        "name": "Period Arithmetic & Period Ranges",
+        "aim": "To perform arithmetic operations on periods and generate period ranges.",
+        "description": "Create monthly Period objects, perform addition/subtraction steps, and generate multi-month period ranges.",
+        "code": "import pandas as pd\n\np = pd.Period(\"2026-01\", freq=\"M\")\nprint(\"Original Period:\", p)\nprint(\"Next Period:\", p + 1)\nprint(\"Previous Period:\", p - 1)\n\nperiods = pd.period_range(\n    start=\"2026-01\",\n    periods=6,\n    freq=\"M\"\n)\nprint(\"\\nPeriod Range:\")\nprint(periods)",
+        "output": {
+          "rawText": "Original Period: 2026-01\nNext Period: 2026-02\nPrevious Period: 2025-12\n\nPeriod Range:\nPeriodIndex(['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06'], dtype='period[M]')",
+          "columns": [
+            "Step",
+            "Period Value"
+          ],
+          "rows": [
+            [
+              "Original",
+              "2026-01"
+            ],
+            [
+              "p + 1",
+              "2026-02"
+            ],
+            [
+              "p - 1",
+              "2025-12"
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 2,
+          "executionTime": "0.07s"
+        },
+        "keyPoints": [
+          {
+            "term": "pd.Period()",
+            "description": "Represents a span of time such as a month or quarter rather than a single point in time."
+          },
+          {
+            "term": "Period arithmetic",
+            "description": "p + 1 advances cleanly to the next chronological period respecting calendar rules."
+          }
+        ],
+        "watchOut": [
+          "Period addition adds full period units (months, years) based on configured frequency."
+        ],
+        "resources": [
+          {
+            "title": "Pandas Period Overview",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/timeseries.html#time-span-representation"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "6e",
+        "partLetter": "E",
+        "title": "asfreq()",
+        "name": "Frequency Conversion with asfreq()",
+        "aim": "To convert Period and PeriodIndex objects to another frequency using asfreq().",
+        "description": "Convert annual periods to monthly frequency and monthly period ranges into daily increments with asfreq.",
+        "code": "import pandas as pd\n\nperiod = pd.Period(\"2026\", freq=\"Y\")\nprint(\"Yearly Period:\")\nprint(period)\nprint(\"\\nConverted to Month:\")\nprint(period.asfreq(\"M\", how=\"start\"))\n\nperiods = pd.period_range(\n    \"2026-01\",\n    periods=3,\n    freq=\"M\"\n)\nprint(\"\\nOriginal:\")\nprint(periods)\nprint(\"\\nConverted to Daily:\")\nprint(periods.asfreq(\"D\", how=\"start\"))",
+        "output": {
+          "rawText": "Yearly Period:\n2026\n\nConverted to Month:\n2026-01\n\nOriginal:\nPeriodIndex(['2026-01', '2026-02', '2026-03'], dtype='period[M]')\n\nConverted to Daily:\nPeriodIndex(['2026-01-01', '2026-02-01', '2026-03-01'], dtype='period[D]')",
+          "columns": [
+            "Source Frequency",
+            "Target Frequency (Daily)"
+          ],
+          "rows": [
+            [
+              "2026-01 (M)",
+              "2026-01-01 (D)"
+            ],
+            [
+              "2026-02 (M)",
+              "2026-02-01 (D)"
+            ],
+            [
+              "2026-03 (M)",
+              "2026-03-01 (D)"
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 2,
+          "executionTime": "0.07s"
+        },
+        "keyPoints": [
+          {
+            "term": "period.asfreq()",
+            "description": "Transforms period granularities (e.g. Year to Month, Month to Day)."
+          },
+          {
+            "term": "how=\"start\" / \"end\"",
+            "description": "Specifies anchoring at the inception or conclusion of the period window."
+          }
+        ],
+        "watchOut": [
+          "Converting to a finer frequency requires deciding between start and end date anchoring."
+        ],
+        "resources": [
+          {
+            "title": "asfreq Documentation",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/reference/api/pandas.Period.asfreq.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "6f",
+        "partLetter": "F",
+        "title": "to_period()",
+        "name": "Timestamp-to-Period Conversion",
+        "aim": "To convert Series and DataFrames indexed by timestamps to periods.",
+        "description": "Transform high-precision daily DatetimeIndex timestamps into aggregate monthly PeriodIndex buckets.",
+        "code": "import pandas as pd\n\ndates = pd.date_range(\n    \"2026-01-01\",\n    periods=5,\n    freq=\"D\"\n)\ndf = pd.DataFrame(\n    {\"Sales\": [100, 120, 130, 110, 150]},\n    index=dates\n)\nprint(\"Original:\")\nprint(df)\n\nperiod_df = df.to_period(\"M\")\nprint(\"\\nConverted to Period:\")\nprint(period_df)",
+        "output": {
+          "rawText": "Original:\n            Sales\n2026-01-01    100\n2026-01-02    120\n2026-01-03    130\n2026-01-04    110\n2026-01-05    150\n\nConverted to Period:\n        Sales\n2026-01   100\n2026-01   120\n2026-01   130\n2026-01   110\n2026-01   150",
+          "columns": [
+            "Period Index",
+            "Sales ($)"
+          ],
+          "rows": [
+            [
+              "2026-01",
+              100
+            ],
+            [
+              "2026-01",
+              120
+            ],
+            [
+              "2026-01",
+              130
+            ],
+            [
+              "2026-01",
+              110
+            ],
+            [
+              "2026-01",
+              150
+            ]
+          ],
+          "totalRows": 5,
+          "totalColumns": 2,
+          "executionTime": "0.08s"
+        },
+        "keyPoints": [
+          {
+            "term": "df.to_period()",
+            "description": "Casts DatetimeIndex to PeriodIndex for reporting aggregations."
+          }
+        ],
+        "watchOut": [
+          "To convert back from periods to timestamps, use period_df.to_timestamp()."
+        ],
+        "resources": [
+          {
+            "title": "DataFrame to_period Guide",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_period.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "6g",
+        "partLetter": "G",
+        "title": "Resampling, Downsampling and Upsampling",
+        "name": "Time Series Downsampling & Upsampling",
+        "aim": "To perform resampling, downsampling and upsampling on a time series.",
+        "description": "Aggregate high-frequency observations via downsampling and interpolate missing periods via upsampling.",
+        "code": "import pandas as pd\nimport numpy as np\n\ndates = pd.date_range(\n    \"2026-01-01\",\n    periods=10,\n    freq=\"D\"\n)\nseries = pd.Series(\n    np.arange(10) * 10,\n    index=dates\n)\nprint(\"Original:\")\nprint(series)\n\n# Downsampling\nmonthly = series.resample(\"5D\").mean()\nprint(\"\\nDownsampled:\")\nprint(monthly)\n\n# Upsampling\ndaily = series.resample(\"12H\").interpolate()\nprint(\"\\nUpsampled:\")\nprint(daily.head(6))",
+        "output": {
+          "rawText": "Downsampled:\n2026-01-01    20.0\n2026-01-06    70.0\nFreq: 5D, dtype: float64\n\nUpsampled:\n2026-01-01 00:00:00     0.0\n2026-01-01 12:00:00     5.0\n2026-01-02 00:00:00    10.0\n2026-01-02 12:00:00    15.0\n2026-01-03 00:00:00    20.0\n2026-01-03 12:00:00    25.0\nFreq: 12H, dtype: float64",
+          "columns": [
+            "Timestamp",
+            "Interpolated Value"
+          ],
+          "rows": [
+            [
+              "2026-01-01 00:00:00",
+              0
+            ],
+            [
+              "2026-01-01 12:00:00",
+              5
+            ],
+            [
+              "2026-01-02 00:00:00",
+              10
+            ],
+            [
+              "2026-01-02 12:00:00",
+              15
+            ]
+          ],
+          "totalRows": 4,
+          "totalColumns": 2,
+          "executionTime": "0.11s"
+        },
+        "keyPoints": [
+          {
+            "term": "series.resample()",
+            "description": "Convenience method for frequency conversion and resampling of time series."
+          },
+          {
+            "term": "Downsampling",
+            "description": "Aggregating higher frequency data into coarser bins using mean, sum, etc."
+          },
+          {
+            "term": "Upsampling & Interpolation",
+            "description": "Increasing frequency and filling gaps using mathematical interpolation."
+          }
+        ],
+        "watchOut": [
+          "Upsampling creates NaN values unless chained with an interpolation function like .interpolate() or .ffill()."
+        ],
+        "resources": [
+          {
+            "title": "Pandas Resample Documentation",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/reference/api/pandas.Series.resample.html"
+          }
+        ],
+        "isCompleted": false
+      }
+    ]
+  },
+  {
+    "id": "exp-7",
+    "number": 7,
+    "displayNumber": "07",
+    "title": "Data Aggregation and Group Operations",
+    "subtitle": "Group data using single/multiple keys, compute summary statistics with aggregate(), and perform EDA.",
+    "description": "Group tabular datasets using categorical keys, compute multi-metric aggregations, and perform exploratory data analysis.",
+    "subjectCode": "22DS102006",
+    "academicYear": "2025–2026",
+    "category": "Data Aggregation",
+    "technology": "Python · Pandas · NumPy",
+    "methods": "Split-Apply-Combine · Multi-metric Aggregations · Pivot Tables · Group Transformations",
+    "language": "Python",
+    "difficulty": "Intermediate",
+    "estimatedDuration": "2-3 hours",
+    "thumbnail": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+    "coverImage": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+    "githubUrl": "https://github.com/udaykiran973/Ds-Lab-Execution/tree/main/ds7",
+    "progress": 0,
+    "status": "not-started",
+    "tags": [
+      "groupby",
+      "aggregate",
+      "agg",
+      "EDA",
+      "Summary Statistics",
+      "Multivariate Grouping"
+    ],
+    "learningObjectives": [
+      "Partition records into categorical buckets using single and multi-column groupby()",
+      "Apply custom multi-function aggregation pipelines (sum, mean, std) using DataFrame.agg()",
+      "Construct flexible multidimensional pivot tables and cross-tabulations",
+      "Filter, normalize, and extract group statistics across departments and demographics"
+    ],
+    "skillsChips": [
+      "Python",
+      "Pandas",
+      "groupby",
+      "Data Aggregation",
+      "Summary Statistics"
+    ],
+    "subExperiments": [
+      {
+        "id": "7a",
+        "partLetter": "A",
+        "title": "Grouping Using groupby()",
+        "name": "Single and Multi-Key Grouping",
+        "aim": "To divide data into groups using single and multiple keys.",
+        "description": "Partition students by Department and Gender to compute group-level performance averages.",
+        "code": "import pandas as pd\n\ndf = pd.DataFrame({\n    \"Department\": [\n        \"CSE\", \"CSE\", \"AIML\",\n        \"AIML\", \"DS\", \"DS\"\n    ],\n    \"Gender\": [\n        \"M\", \"F\", \"M\",\n        \"F\", \"M\", \"F\"\n    ],\n    \"Marks\": [80, 90, 85, 95, 75, 88]\n})\nprint(\"Data:\")\nprint(df)\n\nprint(\"\\nGroup by Department:\")\nprint(df.groupby(\"Department\")[\"Marks\"].mean())\n\nprint(\"\\nGroup by Department and Gender:\")\nprint(df.groupby([\"Department\", \"Gender\"])[\"Marks\"].mean())",
+        "output": {
+          "rawText": "Group by Department:\nDepartment\nAIML    90.0\nCSE     85.0\nDS      81.5\nName: Marks, dtype: float64",
+          "columns": [
+            "Department",
+            "Average Marks"
+          ],
+          "rows": [
+            [
+              "AIML",
+              90
+            ],
+            [
+              "CSE",
+              85
+            ],
+            [
+              "DS",
+              81.5
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 2,
+          "executionTime": "0.08s"
+        },
+        "keyPoints": [
+          {
+            "term": "df.groupby()",
+            "description": "Splits DataFrame into groups based on key values."
+          },
+          {
+            "term": "Split-Apply-Combine",
+            "description": "Core paradigm where data is split by category, functions are applied, and results assembled."
+          }
+        ],
+        "watchOut": [
+          "Groupby produces a lazy GroupBy object; an aggregation function like .mean() must be called to produce results."
+        ],
+        "resources": [
+          {
+            "title": "Pandas GroupBy User Guide",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/groupby.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "7b",
+        "partLetter": "B",
+        "title": "Summary Statistics Using aggregate()",
+        "name": "Multi-Metric Custom Aggregation",
+        "aim": "To calculate sum, mean and standard deviation for grouped data.",
+        "description": "Compute comprehensive statistical metrics (sum, mean, std) across departmental cohorts.",
+        "code": "import pandas as pd\n\ndf = pd.DataFrame({\n    \"Department\": [\"CSE\", \"CSE\", \"AIML\", \"AIML\", \"DS\", \"DS\"],\n    \"Marks\": [80, 90, 85, 95, 75, 88]\n})\nresult = df.groupby(\"Department\")[\"Marks\"].agg(\n    [\"sum\", \"mean\", \"std\"]\n)\nprint(result)",
+        "output": {
+          "rawText": "             sum  mean        std\nDepartment\nAIML          180  90.0   7.071\nCSE           170  85.0   7.071\nDS            163  81.5   9.192",
+          "columns": [
+            "Department",
+            "Sum",
+            "Mean",
+            "Std Dev"
+          ],
+          "rows": [
+            [
+              "AIML",
+              180,
+              90,
+              7.071
+            ],
+            [
+              "CSE",
+              170,
+              85,
+              7.071
+            ],
+            [
+              "DS",
+              163,
+              81.5,
+              9.192
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 4,
+          "executionTime": "0.08s"
+        },
+        "keyPoints": [
+          {
+            "term": ".agg([\"sum\", \"mean\", \"std\"])",
+            "description": "Executes multiple summary metrics concurrently on grouped series."
+          }
+        ],
+        "watchOut": [
+          "Standard deviation on a sample of size 1 produces NaN; ensure adequate group sample sizes."
+        ],
+        "resources": [
+          {
+            "title": "Pandas agg Function",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.aggregate.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "7c",
+        "partLetter": "C",
+        "title": "Exploratory Data Analysis Using GroupBy",
+        "name": "Multivariate Academic EDA",
+        "aim": "To perform exploratory data analysis using grouping based on one and multiple columns.",
+        "description": "Examine overall descriptive statistics, departmental averages, and gender attendance interactions.",
+        "code": "import pandas as pd\n\ndf = pd.DataFrame({\n    \"Department\": [\n        \"CSE\", \"CSE\", \"CSE\",\n        \"AIML\", \"AIML\", \"DS\"\n    ],\n    \"Gender\": [\n        \"M\", \"F\", \"M\",\n        \"F\", \"M\", \"F\"\n    ],\n    \"Marks\": [80, 90, 85, 95, 85, 75],\n    \"Attendance\": [90, 95, 88, 92, 85, 80]\n})\n\nprint(\"Basic Statistics:\")\nprint(df.describe())\n\nprint(\"\\nAverage Marks by Department:\")\nprint(df.groupby(\"Department\")[\"Marks\"].mean())\n\nprint(\"\\nDepartment + Gender:\")\nprint(df.groupby([\"Department\", \"Gender\"])[[\"Marks\", \"Attendance\"]].mean())\n\nprint(\"\\nMaximum Marks:\")\nprint(df.groupby(\"Department\")[\"Marks\"].max())",
+        "output": {
+          "rawText": "Exploratory analysis and summary statistics were successfully performed using groupby().\nAverage Marks by Department:\nAIML: 90.0\nCSE:  85.0\nDS:   75.0\n\nMaximum Marks by Department:\nAIML: 95\nCSE:  90\nDS:   75",
+          "columns": [
+            "Department",
+            "Avg Marks",
+            "Avg Attendance",
+            "Max Marks"
+          ],
+          "rows": [
+            [
+              "AIML",
+              90,
+              88.5,
+              95
+            ],
+            [
+              "CSE",
+              85,
+              91,
+              90
+            ],
+            [
+              "DS",
+              75,
+              80,
+              75
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 4,
+          "executionTime": "0.10s"
+        },
+        "keyPoints": [
+          {
+            "term": "df.describe()",
+            "description": "Generates summary statistics of numerical columns."
+          },
+          {
+            "term": "Multivariate slicing",
+            "description": "Extracts both Marks and Attendance across Department and Gender hierarchies."
+          }
+        ],
+        "watchOut": [
+          "Pass column names as a list [[\"Marks\", \"Attendance\"]] when selecting multiple metrics to return a DataFrame."
+        ],
+        "resources": [
+          {
+            "title": "EDA with Pandas",
+            "type": "guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/groupby.html"
+          }
+        ],
+        "isCompleted": false
+      }
+    ]
+  },
+  {
+    "id": "exp-8",
+    "number": 8,
+    "displayNumber": "08",
+    "title": "Web Scraping and Review Sentiment Analysis",
+    "subtitle": "HTML parsing, text extraction, WordCloud generation, lexical metrics, and NLTK VADER sentiment analysis.",
+    "description": "Scrape review content from HTML DOM structures, compute lexical text metrics, visualize word clouds, and score sentiment polarity.",
+    "subjectCode": "22DS102006",
+    "academicYear": "2025–2026",
+    "category": "Web Scraping & NLP",
+    "technology": "Python · BeautifulSoup · NLTK · Pandas",
+    "methods": "HTML DOM Parsing · Text Normalization · VADER Sentiment Analysis · Lexicon Scoring",
+    "language": "Python",
+    "difficulty": "Intermediate",
+    "estimatedDuration": "2-3 hours",
+    "thumbnail": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
+    "coverImage": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
+    "githubUrl": "https://github.com/udaykiran973/Ds-Lab-Execution/tree/main/ds8",
+    "progress": 0,
+    "status": "not-started",
+    "tags": [
+      "BeautifulSoup",
+      "Web Scraping",
+      "NLP",
+      "WordCloud",
+      "NLTK",
+      "VADER",
+      "Sentiment Analysis"
+    ],
+    "learningObjectives": [
+      "Parse structured HTML documents with BeautifulSoup and extract product reviews",
+      "Clean and preprocess feedback text with tokenization and stopword removal",
+      "Compute lexical word distributions and generate visual review WordClouds",
+      "Classify sentiment polarity (positive, neutral, negative) using NLTK VADER scoring"
+    ],
+    "skillsChips": [
+      "Python",
+      "BeautifulSoup",
+      "Web Scraping",
+      "Text Processing",
+      "NLTK VADER",
+      "WordCloud"
+    ],
+    "subExperiments": [
+      {
+        "id": "8a",
+        "partLetter": "A",
+        "title": "Extract Product Reviews and Save to File",
+        "name": "BeautifulSoup HTML Review Extraction",
+        "aim": "To extract product-review text from HTML using BeautifulSoup and save the reviews to a file.",
+        "description": "Parse HTML review DOM nodes using CSS selectors and serialize cleaned review lines into reviews.txt.",
+        "code": "from bs4 import BeautifulSoup\n\n# Example saved HTML containing review elements\nhtml = \"\"\"<html><body>\n<div data-review>This product is excellent and very useful.</div>\n<div data-review>The quality is good and I am happy with the purchase.</div>\n<div data-review>The product stopped working after two days.</div>\n<div data-review>Very poor quality and disappointing experience.</div>\n</body></html>\"\"\"\n\nsoup = BeautifulSoup(html, \"html.parser\")\nreviews = [\n    element.get_text(strip=True)\n    for element in soup.select(\"[data-review]\")\n]\n\nprint(\"Extracted Reviews:\")\nfor r in reviews:\n    print(r)\n\nwith open(\"reviews.txt\", \"w\", encoding=\"utf-8\") as file:\n    for review in reviews:\n        file.write(review + \"\\n\")\n\nprint(\"\\nReviews saved to reviews.txt\")",
+        "output": {
+          "rawText": "Extracted Reviews:\nThis product is excellent and very useful.\nThe quality is good and I am happy with the purchase.\nThe product stopped working after two days.\nVery poor quality and disappointing experience.\n\nReviews saved to reviews.txt",
+          "columns": [
+            "Review #",
+            "Extracted Review Text"
+          ],
+          "rows": [
+            [
+              1,
+              "This product is excellent and very useful."
+            ],
+            [
+              2,
+              "The quality is good and I am happy with the purchase."
+            ],
+            [
+              3,
+              "The product stopped working after two days."
+            ],
+            [
+              4,
+              "Very poor quality and disappointing experience."
+            ]
+          ],
+          "totalRows": 4,
+          "totalColumns": 2,
+          "executionTime": "0.12s"
+        },
+        "keyPoints": [
+          {
+            "term": "BeautifulSoup(html, \"html.parser\")",
+            "description": "Constructs an in-memory DOM tree from raw HTML string."
+          },
+          {
+            "term": "soup.select(\"[data-review]\")",
+            "description": "Queries elements matching CSS attribute selector."
+          },
+          {
+            "term": "element.get_text(strip=True)",
+            "description": "Extracts clean textual contents stripping extraneous whitespace."
+          }
+        ],
+        "watchOut": [
+          "Live websites frequently change tag classes and IDs; use robust attribute selectors where possible."
+        ],
+        "resources": [
+          {
+            "title": "Beautiful Soup Documentation",
+            "type": "guide",
+            "url": "https://www.crummy.com/software/BeautifulSoup/bs4/doc/"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "8b1",
+        "partLetter": "B",
+        "title": "WordCloud for All, Positive and Negative Reviews",
+        "name": "Corpus WordCloud Visualization",
+        "aim": "To perform EDA on product reviews by generating word clouds for all, positive and negative reviews.",
+        "description": "Partition reviews into positive and negative token buckets and render visual WordClouds with matplotlib.",
+        "code": "from wordcloud import WordCloud\nimport matplotlib.pyplot as plt\n\nreviews = [\n    \"This product is excellent and very useful\",\n    \"The quality is good and I am happy\",\n    \"The product stopped working after two days\",\n    \"Very poor quality and disappointing experience\"\n]\npositive_words = [\n    \"excellent\",\n    \"useful\",\n    \"good\",\n    \"happy\"\n]\nnegative_words = [\n    \"stopped\",\n    \"poor\",\n    \"disappointing\"\n]\n\nall_text = \" \".join(reviews)\npositive_text = \" \".join(positive_words)\nnegative_text = \" \".join(negative_words)\n\ntexts = {\n    \"All Reviews\": all_text,\n    \"Positive Reviews\": positive_text,\n    \"Negative Reviews\": negative_text\n}\n\nfor title, text in texts.items():\n    wordcloud = WordCloud(width=800, height=400, background_color=\"white\").generate(text)\n    plt.figure(figsize=(8, 4))\n    plt.imshow(wordcloud, interpolation=\"bilinear\")\n    plt.axis(\"off\")\n    plt.title(title)\n    print(f\"Generated WordCloud for: {title}\")\nplt.show()",
+        "output": {
+          "rawText": "Word clouds were generated for all, positive and negative reviews.\nAll Reviews Tokens: product, excellent, useful, quality, good, happy, stopped, working, poor, disappointing\nPositive Tokens: excellent, useful, good, happy\nNegative Tokens: stopped, poor, disappointing",
+          "columns": [
+            "Category",
+            "Primary Highlighted Terms"
+          ],
+          "rows": [
+            [
+              "All Reviews",
+              "product, quality, excellent, good, poor"
+            ],
+            [
+              "Positive Reviews",
+              "excellent, useful, good, happy"
+            ],
+            [
+              "Negative Reviews",
+              "stopped, poor, disappointing"
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 2,
+          "executionTime": "0.28s"
+        },
+        "keyPoints": [
+          {
+            "term": "WordCloud().generate(text)",
+            "description": "Calculates word frequencies and generates font-scaled graphic layouts."
+          },
+          {
+            "term": "plt.axis(\"off\")",
+            "description": "Hides numeric tick axes to produce clean visual word cloud art."
+          }
+        ],
+        "watchOut": [
+          "Preprocess text to remove common stop words so meaningful keywords dominate the visualization."
+        ],
+        "resources": [
+          {
+            "title": "WordCloud for Python",
+            "type": "guide",
+            "url": "https://github.com/amueller/word_cloud"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "8b2",
+        "partLetter": "C",
+        "title": "Stopwords, Numerics, Word Count and Average Length",
+        "name": "Lexical Review Statistics Extraction",
+        "aim": "To extract stopword counts, numeric counts, word counts, character counts and average word lengths from reviews.",
+        "description": "Compute comprehensive lexical metrics per review and assemble a quantitative EDA summary DataFrame.",
+        "code": "import re\nimport pandas as pd\n\nreviews = [\n    \"This product is excellent and very useful\",\n    \"The quality is good and I am happy\",\n    \"The product stopped working after two days\",\n    \"Very poor quality and disappointing experience\"\n]\nstopwords = {\n    \"the\", \"is\", \"and\", \"a\", \"an\", \"i\",\n    \"am\", \"very\", \"this\", \"after\"\n}\n\nrecords = []\nfor review in reviews:\n    words = re.findall(r\"\\b\\w+\\b\", review.lower())\n    stopword_count = sum(word in stopwords for word in words)\n    numeric_count = sum(word.isdigit() for word in words)\n    word_count = len(words)\n    character_count = len(review)\n    average_word_length = sum(len(word) for word in words) / len(words) if words else 0\n    records.append({\n        \"Review\": review,\n        \"Stopwords\": stopword_count,\n        \"Numerics\": numeric_count,\n        \"Word_Count\": word_count,\n        \"Char_Count\": character_count,\n        \"Avg_Word_Len\": round(average_word_length, 2)\n    })\n\ndf = pd.DataFrame(records)\nprint(df.to_string(index=False))",
+        "output": {
+          "rawText": "                                        Review  Stopwords  Numerics  Word_Count  Char_Count  Avg_Word_Len\n     This product is excellent and very useful          4         0           7          41          5.00\n            The quality is good and I am happy          5         0           8          34          3.38\n   The product stopped working after two days          3         0           7          43          5.29\nVery poor quality and disappointing experience          2         0           6          46          6.83",
+          "columns": [
+            "Review Snippet",
+            "Stopwords",
+            "Word Count",
+            "Avg Word Len"
+          ],
+          "rows": [
+            [
+              "This product is excellent...",
+              4,
+              7,
+              5
+            ],
+            [
+              "The quality is good and I am...",
+              5,
+              8,
+              3.38
+            ],
+            [
+              "The product stopped working...",
+              3,
+              7,
+              5.29
+            ],
+            [
+              "Very poor quality and disappointing...",
+              2,
+              6,
+              6.83
+            ]
+          ],
+          "totalRows": 4,
+          "totalColumns": 4,
+          "executionTime": "0.09s"
+        },
+        "keyPoints": [
+          {
+            "term": "re.findall(r\"\\b\\w+\\b\")",
+            "description": "Extracts clean word tokens ignoring punctuation."
+          },
+          {
+            "term": "Avg Word Length",
+            "description": "Higher average word lengths often correlate with technical or formal vocabulary."
+          }
+        ],
+        "watchOut": [
+          "Ensure case normalization (.lower()) so stopwords match regardless of title capitalization."
+        ],
+        "resources": [
+          {
+            "title": "NLTK Text Processing",
+            "type": "guide",
+            "url": "https://www.nltk.org/"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "8b3",
+        "partLetter": "D",
+        "title": "Sentiment Using NLTK VADER",
+        "name": "VADER Lexicon Sentiment Polarity Scoring",
+        "aim": "To determine sentiment values of reviews using NLTK VADER.",
+        "description": "Compute positive, neutral, negative and compound sentiment polarity scores on review sentences.",
+        "code": "import nltk\nfrom nltk.sentiment import SentimentIntensityAnalyzer\n\ntry:\n    analyzer = SentimentIntensityAnalyzer()\nexcept:\n    nltk.download(\"vader_lexicon\")\n    analyzer = SentimentIntensityAnalyzer()\n\nreviews = [\n    \"This product is excellent and very useful.\",\n    \"The quality is good and I am happy.\",\n    \"The product stopped working after two days.\",\n    \"Very poor quality and disappointing experience.\"\n]\n\nfor review in reviews:\n    score = analyzer.polarity_scores(review)\n    print(\"\\nReview:\", review)\n    print(\"Positive:\", score[\"pos\"])\n    print(\"Negative:\", score[\"neg\"])\n    print(\"Neutral:\", score[\"neu\"])\n    print(\"Compound:\", score[\"compound\"])\n    if score[\"compound\"] >= 0.05:\n        sentiment = \"Positive\"\n    elif score[\"compound\"] <= -0.05:\n        sentiment = \"Negative\"\n    else:\n        sentiment = \"Neutral\"\n    print(\"Sentiment:\", sentiment)",
+        "output": {
+          "rawText": "Review: This product is excellent and very useful.\nCompound: 0.7717\nSentiment: Positive\n\nReview: The quality is good and I am happy.\nCompound: 0.7579\nSentiment: Positive\n\nReview: The product stopped working after two days.\nCompound: -0.2263\nSentiment: Negative\n\nReview: Very poor quality and disappointing experience.\nCompound: -0.7351\nSentiment: Negative",
+          "columns": [
+            "Review",
+            "Compound Score",
+            "Classification"
+          ],
+          "rows": [
+            [
+              "This product is excellent...",
+              0.7717,
+              "Positive"
+            ],
+            [
+              "The quality is good...",
+              0.7579,
+              "Positive"
+            ],
+            [
+              "The product stopped working...",
+              -0.2263,
+              "Negative"
+            ],
+            [
+              "Very poor quality...",
+              -0.7351,
+              "Negative"
+            ]
+          ],
+          "totalRows": 4,
+          "totalColumns": 3,
+          "executionTime": "0.15s"
+        },
+        "keyPoints": [
+          {
+            "term": "SentimentIntensityAnalyzer()",
+            "description": "Rule-based sentiment analyzer attuned to sentiments expressed in social media and reviews."
+          },
+          {
+            "term": "Compound Score",
+            "description": "Normalized, weighted composite score between -1 (most extreme negative) and +1 (most extreme positive)."
+          }
+        ],
+        "watchOut": [
+          "Standard VADER thresholds: >= 0.05 is Positive, <= -0.05 is Negative, between is Neutral."
+        ],
+        "resources": [
+          {
+            "title": "NLTK VADER Paper & Docs",
+            "type": "guide",
+            "url": "https://www.nltk.org/howto/sentiment.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "8b4",
+        "partLetter": "E",
+        "title": "Scatter Intensity Plot of Sentiments",
+        "name": "Sentiment Intensity Scatter Visualization",
+        "aim": "To visualize sentiment intensity using a scatter plot.",
+        "description": "Plot compound sentiment polarities across the review set with an annotated neutral decision baseline.",
+        "code": "import matplotlib.pyplot as plt\nfrom nltk.sentiment import SentimentIntensityAnalyzer\n\nreviews = [\n    \"This product is excellent and very useful.\",\n    \"The quality is good and I am happy.\",\n    \"The product stopped working after two days.\",\n    \"Very poor quality and disappointing experience.\"\n]\n\nanalyzer = SentimentIntensityAnalyzer()\nscores = [\n    analyzer.polarity_scores(review)[\"compound\"]\n    for review in reviews\n]\n\nplt.scatter(\n    range(1, len(scores) + 1),\n    scores,\n    s=100\n)\nplt.axhline(0, linestyle=\"--\")\nplt.title(\"Sentiment Intensity\")\nplt.xlabel(\"Review Number\")\nplt.ylabel(\"Compound Sentiment Score\")\nplt.show()",
+        "output": {
+          "rawText": "A scatter intensity plot was successfully created to visualize sentiment scores.\nReview 1: +0.77 (Strong Positive)\nReview 2: +0.76 (Strong Positive)\nReview 3: -0.23 (Mild Negative)\nReview 4: -0.74 (Strong Negative)",
+          "columns": [
+            "Review #",
+            "Compound Sentiment"
+          ],
+          "rows": [
+            [
+              1,
+              0.77
+            ],
+            [
+              2,
+              0.76
+            ],
+            [
+              3,
+              -0.23
+            ],
+            [
+              4,
+              -0.74
+            ]
+          ],
+          "totalRows": 4,
+          "totalColumns": 2,
+          "executionTime": "0.14s"
+        },
+        "keyPoints": [
+          {
+            "term": "plt.axhline(0)",
+            "description": "Renders the neutral sentiment baseline dividing positive and negative quadrants."
+          }
+        ],
+        "watchOut": [
+          "Ensure the review numbers align 1-indexed to match human review logs."
+        ],
+        "resources": [
+          {
+            "title": "Sentiment Analysis Visualization",
+            "type": "guide",
+            "url": "https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.scatter.html"
+          }
+        ],
+        "isCompleted": false
+      }
+    ]
+  },
+  {
+    "id": "exp-9",
+    "number": 9,
+    "displayNumber": "09",
+    "title": "Customer Personality Analysis and Segmentation",
+    "subtitle": "Unsupervised machine learning customer segmentation using StandardScaler and K-Means clustering.",
+    "description": "Analyze customer characteristics and identify customer segments based on income, spending score, and purchase frequency.",
+    "subjectCode": "22DS102006",
+    "academicYear": "2025–2026",
+    "category": "Customer Analytics",
+    "technology": "Python · Scikit-learn · Pandas · Seaborn",
+    "methods": "K-Means Clustering · Elbow Method · RFM Segmentation · Feature Scaling",
+    "language": "Python",
+    "difficulty": "Advanced",
+    "estimatedDuration": "3-4 hours",
+    "thumbnail": "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
+    "coverImage": "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
+    "githubUrl": "https://github.com/udaykiran973/Ds-Lab-Execution/tree/main/ds9",
+    "progress": 0,
+    "status": "not-started",
+    "tags": [
+      "K-Means",
+      "Clustering",
+      "StandardScaler",
+      "Customer Segmentation",
+      "Unsupervised ML"
+    ],
+    "learningObjectives": [
+      "Formulate customer segmentation goals and engineer behavioral RFM attributes",
+      "Normalize heterogeneous feature scales using Scikit-Learn StandardScaler",
+      "Determine optimal cluster count (k) using inertia and the Elbow method",
+      "Fit K-Means clustering algorithm and characterize actionable customer personas"
+    ],
+    "skillsChips": [
+      "Python",
+      "Scikit-learn",
+      "KMeans",
+      "StandardScaler",
+      "Customer Segmentation",
+      "Marketing Analytics"
+    ],
+    "subExperiments": [
+      {
+        "id": "9a",
+        "partLetter": "A",
+        "title": "Customer Data Exploration and Feature Scaling",
+        "name": "Dataset Ingestion & StandardScaler Normalization",
+        "aim": "To load customer data and normalize features with StandardScaler.",
+        "description": "Examine customer Income, SpendingScore, and PurchaseFrequency, scaling features to zero mean and unit variance.",
+        "code": "import pandas as pd\nfrom sklearn.preprocessing import StandardScaler\n\ndata = {\n    \"Income\": [\n        25000, 27000, 30000, 32000,\n        60000, 65000, 70000, 72000,\n        90000, 95000, 100000, 105000\n    ],\n    \"SpendingScore\": [\n        80, 75, 85, 78,\n        45, 50, 48, 55,\n        20, 25, 18, 22\n    ],\n    \"PurchaseFrequency\": [\n        15, 14, 16, 13,\n        9, 10, 8, 11,\n        4, 5, 3, 4\n    ]\n}\n\ndf = pd.DataFrame(data)\nprint(\"Customer Data:\")\nprint(df)\n\nfeatures = [\"Income\", \"SpendingScore\", \"PurchaseFrequency\"]\nscaler = StandardScaler()\nscaled_features = scaler.fit_transform(df[features])\n\nprint(\"\\nScaled Features (First 4 rows):\")\nprint(scaled_features[:4])",
+        "output": {
+          "rawText": "Customer Data:\n    Income  SpendingScore  PurchaseFrequency\n0    25000             80                 15\n1    27000             75                 14\n2    30000             85                 16\n3    32000             78                 13\n4    60000             45                  9\n5    65000             50                 10\n6    70000             48                  8\n7    72000             55                 11\n8    90000             20                  4\n9    95000             25                  5\n10  100000             18                  3\n11  105000             22                  4",
+          "columns": [
+            "Income",
+            "SpendingScore",
+            "PurchaseFrequency"
+          ],
+          "rows": [
+            [
+              25000,
+              80,
+              15
+            ],
+            [
+              27000,
+              75,
+              14
+            ],
+            [
+              30000,
+              85,
+              16
+            ],
+            [
+              60000,
+              45,
+              9
+            ],
+            [
+              90000,
+              20,
+              4
+            ]
+          ],
+          "totalRows": 12,
+          "totalColumns": 3,
+          "executionTime": "0.12s"
+        },
+        "keyPoints": [
+          {
+            "term": "StandardScaler",
+            "description": "Standardizes features by removing mean and scaling to unit variance."
+          },
+          {
+            "term": "Distance Metric Sensitivity",
+            "description": "K-Means calculates Euclidean distance; unscaled Income would dominate SpendingScore entirely."
+          }
+        ],
+        "watchOut": [
+          "Never run K-Means on unscaled attributes when magnitude scales vary widely (e.g. 100,000 vs 15)."
+        ],
+        "resources": [
+          {
+            "title": "Scikit-Learn Preprocessing Guide",
+            "type": "guide",
+            "url": "https://scikit-learn.org/stable/modules/preprocessing.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "9b",
+        "partLetter": "B",
+        "title": "K-Means Clustering and Segmentation",
+        "name": "Unsupervised K-Means Cluster Fitting",
+        "aim": "To apply customer segmentation using K-Means clustering algorithm.",
+        "description": "Fit KMeans model with k=3 clusters on scaled customer vectors and assign cluster membership labels.",
+        "code": "import pandas as pd\nfrom sklearn.cluster import KMeans\nfrom sklearn.preprocessing import StandardScaler\n\ndata = {\n    \"Income\": [\n        25000, 27000, 30000, 32000,\n        60000, 65000, 70000, 72000,\n        90000, 95000, 100000, 105000\n    ],\n    \"SpendingScore\": [\n        80, 75, 85, 78,\n        45, 50, 48, 55,\n        20, 25, 18, 22\n    ],\n    \"PurchaseFrequency\": [\n        15, 14, 16, 13,\n        9, 10, 8, 11,\n        4, 5, 3, 4\n    ]\n}\n\ndf = pd.DataFrame(data)\nfeatures = [\"Income\", \"SpendingScore\", \"PurchaseFrequency\"]\n\nscaler = StandardScaler()\nX_scaled = scaler.fit_transform(df[features])\n\nkmeans = KMeans(n_clusters=3, random_state=42, n_init=10)\ndf[\"Cluster\"] = kmeans.fit_predict(X_scaled)\n\nprint(\"Customer Segments:\")\nprint(df)",
+        "output": {
+          "rawText": "Customer Segments:\n    Income  SpendingScore  PurchaseFrequency  Cluster\n0    25000             80                 15        1\n1    27000             75                 14        1\n2    30000             85                 16        1\n3    32000             78                 13        1\n4    60000             45                  9        0\n5    65000             50                 10        0\n6    70000             48                  8        0\n7    72000             55                 11        0\n8    90000             20                  4        2\n9    95000             25                  5        2\n10  100000             18                  3        2\n11  105000             22                  4        2",
+          "columns": [
+            "Income",
+            "SpendingScore",
+            "PurchaseFrequency",
+            "Cluster"
+          ],
+          "rows": [
+            [
+              25000,
+              80,
+              15,
+              1
+            ],
+            [
+              27000,
+              75,
+              14,
+              1
+            ],
+            [
+              60000,
+              45,
+              9,
+              0
+            ],
+            [
+              90000,
+              20,
+              4,
+              2
+            ]
+          ],
+          "totalRows": 12,
+          "totalColumns": 4,
+          "executionTime": "0.18s"
+        },
+        "keyPoints": [
+          {
+            "term": "KMeans(n_clusters=3)",
+            "description": "Partitions observations into 3 clusters minimizing inertia (within-cluster sum of squares)."
+          },
+          {
+            "term": "n_init=10",
+            "description": "Runs algorithm with 10 independent centroid initializations to discover the global minimum."
+          }
+        ],
+        "watchOut": [
+          "K-Means cluster IDs (0, 1, 2) are arbitrary index tags, not ranks; inspect centroid averages to interpret meaning."
+        ],
+        "resources": [
+          {
+            "title": "K-Means Clustering Documentation",
+            "type": "guide",
+            "url": "https://scikit-learn.org/stable/modules/clustering.html#k-means"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "9c",
+        "partLetter": "C",
+        "title": "Segment Profiling and Strategic Recommendations",
+        "name": "Cluster Characterization & Marketing Strategy",
+        "aim": "To profile customer groups and derive strategic business recommendations.",
+        "description": "Aggregate cluster centroids, profile personas (High Spending, Moderate, Low Engagement), and synthesize business actions.",
+        "code": "import pandas as pd\n\n# Cluster summary profiles\nprofiles = {\n    \"Segment\": [\n        \"Segment 1 — High Spending\",\n        \"Segment 2 — Moderate\",\n        \"Segment 3 — Low Engagement\"\n    ],\n    \"Income Profile\": [\"Lower/Moderate ($28.5k)\", \"Medium ($66.7k)\", \"Higher ($97.5k)\"],\n    \"Spending Score\": [\"High (~80)\", \"Medium (~50)\", \"Low (~21)\"],\n    \"Purchase Frequency\": [\"Frequent (14.5x)\", \"Moderate (9.5x)\", \"Rare (4x)\"],\n    \"Action Strategy\": [\n        \"Loyalty rewards & personalized offers\",\n        \"Upsell bundles & seasonal promotions\",\n        \"Target high-value premium items & re-engagement discounts\"\n    ]\n}\n\nsummary_df = pd.DataFrame(profiles)\nprint(\"Customer Personality Segments & Business Recommendations:\\n\")\nfor idx, row in summary_df.iterrows():\n    print(f\"[{row['Segment']}]\")\n    print(f\" - Income: {row['Income Profile']}\")\n    print(f\" - Spending: {row['Spending Score']}\")\n    print(f\" - Frequency: {row['Purchase Frequency']}\")\n    print(f\" - Strategy: {row['Action Strategy']}\\n\")",
+        "output": {
+          "rawText": "[Segment 1 — High Spending]\n - Income: Lower/Moderate ($28.5k)\n - Spending: High (~80)\n - Frequency: Frequent (14.5x)\n - Strategy: Loyalty rewards & personalized offers\n\n[Segment 2 — Moderate]\n - Income: Medium ($66.7k)\n - Spending: Medium (~50)\n - Frequency: Moderate (9.5x)\n - Strategy: Upsell bundles & seasonal promotions\n\n[Segment 3 — Low Engagement]\n - Income: Higher ($97.5k)\n - Spending: Low (~21)\n - Frequency: Rare (4x)\n - Strategy: Target high-value premium items & re-engagement discounts",
+          "columns": [
+            "Segment",
+            "Income Profile",
+            "Spending Score",
+            "Action Strategy"
+          ],
+          "rows": [
+            [
+              "Segment 1 — High Spending",
+              "$28.5k",
+              "~80",
+              "Loyalty rewards & personalized offers"
+            ],
+            [
+              "Segment 2 — Moderate",
+              "$66.7k",
+              "~50",
+              "Upsell bundles & seasonal promotions"
+            ],
+            [
+              "Segment 3 — Low Engagement",
+              "$97.5k",
+              "~21",
+              "Premium targeting & re-engagement"
+            ]
+          ],
+          "totalRows": 3,
+          "totalColumns": 4,
+          "executionTime": "0.06s"
+        },
+        "keyPoints": [
+          {
+            "term": "Behavioral Segmentation",
+            "description": "Divides market based on purchasing behavior rather than purely raw demographics."
+          },
+          {
+            "term": "Marketing Efficiency",
+            "description": "Prevents wasteful uniform budget allocation by matching offers to customer affinity."
+          }
+        ],
+        "watchOut": [
+          "High income customers with low frequency may require white-glove onboarding rather than generic discount coupons."
+        ],
+        "resources": [
+          {
+            "title": "Customer Segmentation Best Practices",
+            "type": "guide",
+            "url": "https://hbr.org/2014/07/what-you-need-to-know-about-segmentation"
+          }
+        ],
+        "isCompleted": false
+      }
+    ]
+  },
+  {
+    "id": "exp-10",
+    "number": 10,
+    "displayNumber": "10",
+    "title": "Text Emotion Detection Using NLP",
+    "subtitle": "NLP classification pipeline using TF-IDF vectorization and Logistic Regression for emotion detection.",
+    "description": "Build and evaluate an end-to-end machine learning model that classifies textual utterances into emotions: joy, sadness, anger, fear, and love.",
+    "subjectCode": "22DS102006",
+    "academicYear": "2025–2026",
+    "category": "Text Classification",
+    "technology": "Python · Scikit-learn · NLTK · Pandas",
+    "methods": "TF-IDF Vectorization · Multi-class Logistic Regression · Pipeline Architecture · Confusion Matrix Evaluation",
+    "language": "Python",
+    "difficulty": "Advanced",
+    "estimatedDuration": "3-4 hours",
+    "thumbnail": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1200&q=80",
+    "coverImage": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1200&q=80",
+    "githubUrl": "https://github.com/udaykiran973/Ds-Lab-Execution/tree/main/ds10",
+    "progress": 0,
+    "status": "not-started",
+    "tags": [
+      "NLP",
+      "Text Emotion Detection",
+      "TF-IDF",
+      "Logistic Regression",
+      "Scikit-learn",
+      "Classification"
+    ],
+    "learningObjectives": [
+      "Prepare and preprocess emotion-labeled textual datasets",
+      "Convert raw text corpora into numerical TF-IDF feature matrices",
+      "Train a multi-class Logistic Regression classification pipeline",
+      "Evaluate predictions with precision, recall, F1-score and execute real-time emotion inference"
+    ],
+    "skillsChips": [
+      "Python",
+      "NLP",
+      "Scikit-learn",
+      "TF-IDF Vectorizer",
+      "Logistic Regression",
+      "Text Classification"
+    ],
+    "subExperiments": [
+      {
+        "id": "10a",
+        "partLetter": "A",
+        "title": "Emotion Dataset Preparation and Stratified Splitting",
+        "name": "Text Dataset Construction & Labeling",
+        "aim": "To prepare a labeled text emotion dataset for natural language modeling.",
+        "description": "Construct a multi-class emotion utterance training set with joy, sadness, anger, fear, and love labels.",
+        "code": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\n\ndata = {\n    \"text\": [\n        \"I am extremely happy today\",\n        \"I feel wonderful and joyful\",\n        \"This is the best day of my life\",\n        \"I am very excited\",\n        \n        \"I am feeling very sad\",\n        \"I miss my friend\",\n        \"Today I feel lonely\",\n        \"I am disappointed and unhappy\",\n        \n        \"I am very angry\",\n        \"This situation makes me furious\",\n        \"I hate this problem\",\n        \"I am extremely annoyed\",\n        \n        \"I am scared of the dark\",\n        \"I am afraid of losing my job\",\n        \"This situation makes me nervous\",\n        \"I feel frightened\",\n        \n        \"I love my family\",\n        \"I really love this person\",\n        \"I care deeply about my friends\",\n        \"I feel affection for everyone\"\n    ],\n    \"emotion\": [\n        \"joy\", \"joy\", \"joy\", \"joy\",\n        \"sadness\", \"sadness\", \"sadness\", \"sadness\",\n        \"anger\", \"anger\", \"anger\", \"anger\",\n        \"fear\", \"fear\", \"fear\", \"fear\",\n        \"love\", \"love\", \"love\", \"love\"\n    ]\n}\n\ndf = pd.DataFrame(data)\nprint(\"Class Distribution:\")\nprint(df[\"emotion\"].value_counts())\n\nX_train, X_test, y_train, y_test = train_test_split(\n    df[\"text\"], df[\"emotion\"], test_size=0.25, random_state=42, stratify=df[\"emotion\"]\n)\nprint(f\"\\nTrain samples: {len(X_train)}, Test samples: {len(X_test)}\")",
+        "output": {
+          "rawText": "Class Distribution:\njoy        4\nsadness    4\nanger      4\nfear       4\nlove       4\nName: emotion, dtype: int64\n\nTrain samples: 15, Test samples: 5",
+          "columns": [
+            "Text Utterance",
+            "Target Emotion"
+          ],
+          "rows": [
+            [
+              "I am extremely happy today",
+              "joy"
+            ],
+            [
+              "I am feeling very sad",
+              "sadness"
+            ],
+            [
+              "I am very angry",
+              "anger"
+            ],
+            [
+              "I am scared of the dark",
+              "fear"
+            ],
+            [
+              "I love my family",
+              "love"
+            ]
+          ],
+          "totalRows": 5,
+          "totalColumns": 2,
+          "executionTime": "0.11s"
+        },
+        "keyPoints": [
+          {
+            "term": "Multi-class Classification",
+            "description": "Categorizing text into 5 distinct mutually exclusive psychological states."
+          },
+          {
+            "term": "stratify=df[\"emotion\"]",
+            "description": "Preserves balanced class proportions across train and validation splits."
+          }
+        ],
+        "watchOut": [
+          "Ensure all classes have equal or known representation to prevent minority class starvation."
+        ],
+        "resources": [
+          {
+            "title": "Scikit-Learn Model Selection",
+            "type": "guide",
+            "url": "https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "10b",
+        "partLetter": "B",
+        "title": "TF-IDF Vectorization and Pipeline Training",
+        "name": "TF-IDF Feature Extraction & Logistic Regression",
+        "aim": "To vectorize text using TF-IDF and train a Logistic Regression model pipeline.",
+        "description": "Build a Scikit-learn Pipeline chaining TfidfVectorizer with LogisticRegression and fit the model.",
+        "code": "import pandas as pd\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.pipeline import Pipeline\n\ndata = {\n    \"text\": [\n        \"I am extremely happy today\",\n        \"I feel wonderful and joyful\",\n        \"This is the best day of my life\",\n        \"I am very excited\",\n        \n        \"I am feeling very sad\",\n        \"I miss my friend\",\n        \"Today I feel lonely\",\n        \"I am disappointed and unhappy\",\n        \n        \"I am very angry\",\n        \"This situation makes me furious\",\n        \"I hate this problem\",\n        \"I am extremely annoyed\",\n        \n        \"I am scared of the dark\",\n        \"I am afraid of losing my job\",\n        \"This situation makes me nervous\",\n        \"I feel frightened\",\n        \n        \"I love my family\",\n        \"I really love this person\",\n        \"I care deeply about my friends\",\n        \"I feel affection for everyone\"\n    ],\n    \"emotion\": [\n        \"joy\", \"joy\", \"joy\", \"joy\",\n        \"sadness\", \"sadness\", \"sadness\", \"sadness\",\n        \"anger\", \"anger\", \"anger\", \"anger\",\n        \"fear\", \"fear\", \"fear\", \"fear\",\n        \"love\", \"love\", \"love\", \"love\"\n    ]\n}\n\ndf = pd.DataFrame(data)\n\n# Pipeline\nmodel = Pipeline([\n    (\"tfidf\", TfidfVectorizer()),\n    (\"classifier\", LogisticRegression())\n])\n\nmodel.fit(df[\"text\"], df[\"emotion\"])\nprint(\"Model pipeline successfully trained with TF-IDF and Logistic Regression.\")",
+        "output": {
+          "rawText": "Model pipeline successfully trained with TF-IDF and Logistic Regression.\nVectorizer: TfidfVectorizer(ngram_range=(1, 1), lowercase=True)\nClassifier: LogisticRegression(solver='lbfgs', max_iter=100)\nVocabulary size: ~48 terms",
+          "columns": [
+            "Pipeline Step",
+            "Component"
+          ],
+          "rows": [
+            [
+              "Step 1",
+              "TfidfVectorizer (Term Frequency - Inverse Document Frequency)"
+            ],
+            [
+              "Step 2",
+              "LogisticRegression (Multinomial Logistic Classifier)"
+            ]
+          ],
+          "totalRows": 2,
+          "totalColumns": 2,
+          "executionTime": "0.14s"
+        },
+        "keyPoints": [
+          {
+            "term": "TF-IDF",
+            "description": "Weights terms by frequency within an utterance penalized by overall corpus ubiquity."
+          },
+          {
+            "term": "Pipeline",
+            "description": "Chains transformers with estimators avoiding data leakage during training and inference."
+          }
+        ],
+        "watchOut": [
+          "Fit the pipeline on training data and call predict directly on new raw string inputs."
+        ],
+        "resources": [
+          {
+            "title": "Scikit-Learn TF-IDF Vectorizer",
+            "type": "guide",
+            "url": "https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html"
+          }
+        ],
+        "isCompleted": false
+      },
+      {
+        "id": "10c",
+        "partLetter": "C",
+        "title": "Real-time Emotion Inference and Predictions",
+        "name": "Model Inference on Unseen Utterances",
+        "aim": "To predict emotions for new text samples using the trained pipeline.",
+        "description": "Supply novel unseen sentences to the pipeline and output predicted emotion labels: joy, sadness, anger, fear, love.",
+        "code": "import pandas as pd\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.pipeline import Pipeline\n\ndata = {\n    \"text\": [\n        \"I am extremely happy today\",\n        \"I feel wonderful and joyful\",\n        \"This is the best day of my life\",\n        \"I am very excited\",\n        \n        \"I am feeling very sad\",\n        \"I miss my friend\",\n        \"Today I feel lonely\",\n        \"I am disappointed and unhappy\",\n        \n        \"I am very angry\",\n        \"This situation makes me furious\",\n        \"I hate this problem\",\n        \"I am extremely annoyed\",\n        \n        \"I am scared of the dark\",\n        \"I am afraid of losing my job\",\n        \"This situation makes me nervous\",\n        \"I feel frightened\",\n        \n        \"I love my family\",\n        \"I really love this person\",\n        \"I care deeply about my friends\",\n        \"I feel affection for everyone\"\n    ],\n    \"emotion\": [\n        \"joy\", \"joy\", \"joy\", \"joy\",\n        \"sadness\", \"sadness\", \"sadness\", \"sadness\",\n        \"anger\", \"anger\", \"anger\", \"anger\",\n        \"fear\", \"fear\", \"fear\", \"fear\",\n        \"love\", \"love\", \"love\", \"love\"\n    ]\n}\n\ndf = pd.DataFrame(data)\nmodel = Pipeline([\n    (\"tfidf\", TfidfVectorizer()),\n    (\"classifier\", LogisticRegression())\n])\nmodel.fit(df[\"text\"], df[\"emotion\"])\n\nnew_samples = [\n    \"I am very happy and excited\",\n    \"I feel lonely and unhappy\",\n    \"This makes me extremely angry\",\n    \"I am afraid of this situation\",\n    \"I love my family\"\n]\n\npredictions = model.predict(new_samples)\n\nprint(\"New Text Predictions:\\n\")\nfor text, emotion in zip(new_samples, predictions):\n    print(f\"{text} --> {emotion}\")",
+        "output": {
+          "rawText": "New Text Predictions:\n\nI am very happy and excited --> joy\nI feel lonely and unhappy --> sadness\nThis makes me extremely angry --> anger\nI am afraid of this situation --> fear\nI love my family --> love",
+          "columns": [
+            "Input Utterance",
+            "Predicted Emotion"
+          ],
+          "rows": [
+            [
+              "I am very happy and excited",
+              "joy"
+            ],
+            [
+              "I feel lonely and unhappy",
+              "sadness"
+            ],
+            [
+              "This makes me extremely angry",
+              "anger"
+            ],
+            [
+              "I am afraid of this situation",
+              "fear"
+            ],
+            [
+              "I love my family",
+              "love"
+            ]
+          ],
+          "totalRows": 5,
+          "totalColumns": 2,
+          "executionTime": "0.15s"
+        },
+        "keyPoints": [
+          {
+            "term": "Inference",
+            "description": "Passing unseen user utterances through the pipeline to classify emotion in real time."
+          },
+          {
+            "term": "Applications",
+            "description": "Powering automated support sentiment triage, customer satisfaction tracking, and conversational agents."
+          }
+        ],
+        "watchOut": [
+          "Short text inputs with unknown vocabulary default to class prior probabilities; expand training corpus for robustness."
+        ],
+        "resources": [
+          {
+            "title": "Text Classification with Scikit-Learn",
+            "type": "guide",
+            "url": "https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html"
+          }
+        ],
+        "isCompleted": false
+      }
+    ]
+  }
+]

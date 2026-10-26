@@ -1,0 +1,7 @@
+{
+  "name": "Data Science Laboratory Portfolio",
+  "description": "An interactive, modern Data Science Laboratory Portfolio featuring experiment catalogues, sub-experiments editor, Python code execution, modules curriculum, and analytics tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
